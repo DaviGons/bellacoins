@@ -10,6 +10,7 @@ financeiro/*.csv
 
 # Claude Code (config pessoal)
 .claude/settings.local.json
+.claude/worktrees/
 
 # Node / Next.js
 node_modules/
