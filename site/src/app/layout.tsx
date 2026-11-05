@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Mono, Fraunces, Plus_Jakarta_Sans, Unbounded } from "next/font/google";
-import Link from "next/link";
-import { Logo } from "@/components/Logo";
+import { Rodape } from "@/components/Rodape";
+import { Topo } from "@/components/Topo";
 import { LOJA } from "@/config/loja";
 import "./globals.css";
 
@@ -12,8 +12,12 @@ const jakarta = Plus_Jakarta_Sans({ variable: "--fonte-jakarta", subsets: ["lati
 const dmMono = DM_Mono({ variable: "--fonte-dmmono", subsets: ["latin"], weight: ["400", "500"] });
 
 export const metadata: Metadata = {
-  title: { default: `${LOJA.nome} · Tibia Coins no Pix`, template: `%s · ${LOJA.nome}` },
-  description: `Tibia Coins com pagamento no Pix e entrega no seu personagem. ${LOJA.slogan}`,
+  title: { default: `${LOJA.nome}: Tibia Coins no Pix`, template: `%s | ${LOJA.nome}` },
+  description: `Tibia Coins com pagamento no Pix e entrega manual no seu personagem. ${LOJA.slogan}`,
+};
+
+export const viewport: Viewport = {
+  themeColor: "#160A24",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -23,18 +27,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${fraunces.variable} ${unbounded.variable} ${jakarta.variable} ${dmMono.variable}`}
     >
       <body>
-        <header className="vitrine">
-          <div style={{ maxWidth: 560, margin: "0 auto", padding: "14px 16px" }}>
-            <Link href="/" aria-label={`${LOJA.nome}, página inicial`} style={{ textDecoration: "none" }}>
-              <Logo />
-            </Link>
-          </div>
-          <div className="vitrine-faixa" />
-        </header>
+        <Topo />
         {children}
-        <footer className="rodape">
-          {LOJA.nome} é uma loja independente, sem ligação com a CipSoft. Tibia é marca da CipSoft GmbH.
-        </footer>
+        <Rodape />
       </body>
     </html>
   );

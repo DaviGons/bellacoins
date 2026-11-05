@@ -3,6 +3,15 @@
 import { useActionState, useState } from "react";
 import { enviarPedido, type EstadoForm } from "./actions";
 
+function Visto() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" fill="#3DDBB4" />
+      <path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#0F5A47" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function FormPedido({ tc }: { tc: number }) {
   const [estado, acao, enviando] = useActionState<EstadoForm, FormData>(enviarPedido, { etapa: "digitar" });
   const [editando, setEditando] = useState(false);
@@ -19,6 +28,7 @@ export function FormPedido({ tc }: { tc: number }) {
         <input
           id="personagem"
           name="personagem"
+          className={confirmar && p ? "conferido" : undefined}
           defaultValue={estado.nome}
           key={`p-${estado.nome}`}
           readOnly={confirmar}
@@ -28,8 +38,30 @@ export function FormPedido({ tc }: { tc: number }) {
           maxLength={29}
           placeholder="Ex.: Eldor Vane"
         />
-        <span className="ajuda">Igual aparece no jogo. As coins vão para este personagem.</span>
+        <span className="ajuda">Igual aparece no jogo, com espaços.</span>
       </div>
+
+      {confirmar && p && (
+        <div className="achado" role="status">
+          <Visto />
+          <div>
+            <b>{p.nome}</b>
+            {[p.mundo, p.level > 0 ? `level ${p.level}` : "", p.vocacao].filter(Boolean).join(", ")}. É esse?
+            {p.avisos.map((a) => (
+              <div key={a} style={{ marginTop: 6 }}>
+                Atenção: {a}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {confirmar && estado.naoConferido && (
+        <p className="aviso aviso-atencao" role="status">
+          Não conseguimos conferir o personagem agora. Confira se o nome está exato antes de seguir: as coins vão para
+          ele.
+        </p>
+      )}
 
       <div className="campo">
         <label htmlFor="contato">Seu WhatsApp</label>
@@ -54,35 +86,14 @@ export function FormPedido({ tc }: { tc: number }) {
         </p>
       )}
 
-      {confirmar && p && (
-        <div className="aviso aviso-ok" role="status">
-          Achamos <strong>{p.nome}</strong>
-          {p.mundo && <> · {p.mundo}</>}
-          {p.level > 0 && <> · level {p.level}</>}
-          {p.vocacao && <> · {p.vocacao}</>}. É esse?
-          {p.avisos.map((a) => (
-            <div key={a} style={{ marginTop: 6 }}>
-              ⚠ {a}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {confirmar && estado.naoConferido && (
-        <p className="aviso aviso-atencao" role="status">
-          Não conseguimos conferir o personagem agora. Confira se o nome está exato antes de seguir: a entrega vai
-          para ele.
-        </p>
-      )}
-
       <button className="botao" type="submit" disabled={enviando}>
-        {enviando ? "Um instante…" : confirmar ? "É esse, ir para o Pix" : "Conferir personagem"}
+        {enviando ? "Conferindo…" : confirmar ? "É esse, ir para o Pix" : "Conferir personagem"}
       </button>
 
       {confirmar && (
-        <p style={{ textAlign: "center", marginTop: 14 }}>
+        <p className="centro" style={{ marginTop: 14 }}>
           <button type="button" className="botao-secundario" onClick={() => setEditando(true)}>
-            Corrigir dados
+            Corrigir nome ou WhatsApp
           </button>
         </p>
       )}

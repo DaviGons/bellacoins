@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { estaLogado, painelConfigurado } from "@/lib/admin";
+import { modoDemo, painelAbertoSemSenha } from "@/lib/demo";
 import { reais } from "@/lib/dinheiro";
 import { pedidos, ROTULO_STATUS, type Pedido, type Status } from "@/lib/pedidos";
 import { linkTibia } from "@/lib/tibia";
-import { login, logout, mudarStatus } from "./actions";
+import { criarExemplos, login, logout, mudarStatus } from "./actions";
 
 export const metadata: Metadata = { title: "Painel", robots: { index: false } };
 
-// Próximos passos possíveis de cada status. A entrega é sempre manual: "Entregue" só depois de transferir.
+// Próximos passos possíveis de cada status. A entrega é sempre manual: "Entreguei" só depois de transferir.
 const PROXIMOS: Record<Status, { status: Status; rotulo: string }[]> = {
   aguardando_pix: [
     { status: "pago", rotulo: "Pix caiu" },
@@ -30,31 +32,31 @@ const dataHora = new Intl.DateTimeFormat("pt-BR", {
   timeZone: "America/Sao_Paulo",
 });
 
+function whatsapp(contato: string): string {
+  return `https://wa.me/${contato.length >= 12 ? contato : `55${contato}`}`;
+}
+
 function LinhaPedido({ p }: { p: Pedido }) {
   return (
-    <li className="cartao" style={{ display: "grid", gap: 8 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
-        <strong className="preco">#{p.numero}</strong>
-        <span className={`selo-status status-${p.status}`}>{ROTULO_STATUS[p.status]}</span>
-      </div>
-      <div>
-        {p.tc.toLocaleString("pt-BR")} TC · <span className="preco">{reais(p.valorCentavos)}</span> ·{" "}
-        <a href={linkTibia(p.personagem)} target="_blank" rel="noreferrer">
-          {p.personagem}
-        </a>
-        {p.mundo && <> ({p.mundo})</>}
-      </div>
-      <div className="ajuda">
-        WhatsApp <a href={`https://wa.me/${p.contato.length >= 12 ? p.contato : `55${p.contato}`}`}>{p.contato}</a> · {dataHora.format(new Date(p.criadoEm))}
-      </div>
-      {!p.personagemConferido && (
-        <div className="aviso aviso-atencao" style={{ margin: 0 }}>
-          Personagem não conferido. Abrir o link do nome antes de entregar.
+    <li className="pedido-linha">
+      <div className="principal">
+        <div className="topo-linha">
+          <span className="numero">#{p.numero}</span>
+          <span className={`selo-status status-${p.status}`}>{ROTULO_STATUS[p.status]}</span>
         </div>
-      )}
-      {p.observacoes && p.personagemConferido && <div className="ajuda">⚠ {p.observacoes}</div>}
+        <div>
+          <b>{p.tc.toLocaleString("pt-BR")} TC</b> por <span className="pack-valor">{reais(p.valorCentavos)}</span> para{" "}
+          <a href={linkTibia(p.personagem)} target="_blank" rel="noreferrer">
+            {p.personagem}
+          </a>
+          {p.mundo && ` (${p.mundo})`}
+        </div>
+        <div className="ajuda">
+          <a href={whatsapp(p.contato)}>{p.contato}</a>, {dataHora.format(new Date(p.criadoEm))}
+        </div>
+      </div>
       {PROXIMOS[p.status].length > 0 && (
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div className="acoes">
           {PROXIMOS[p.status].map((acao) => (
             <form key={acao.status} action={mudarStatus}>
               <input type="hidden" name="numero" value={p.numero} />
@@ -66,13 +68,16 @@ function LinhaPedido({ p }: { p: Pedido }) {
           ))}
         </div>
       )}
+      {!p.personagemConferido && (
+        <p className="alerta">Personagem não conferido no pedido. Abra o link do nome antes de entregar.</p>
+      )}
     </li>
   );
 }
 
 export default function Painel({ searchParams }: PageProps<"/painel">) {
   return (
-    <Suspense fallback={<main className="compra">Carregando…</main>}>
+    <Suspense fallback={<main className="painel">Carregando…</main>}>
       <Conteudo searchParams={searchParams} />
     </Suspense>
   );
@@ -83,7 +88,7 @@ async function Conteudo({ searchParams }: Pick<PageProps<"/painel">, "searchPara
 
   if (!painelConfigurado()) {
     return (
-      <main className="compra">
+      <main className="pagina-compra">
         <h1 className="titulo">Painel desligado</h1>
         <p className="subtitulo">Defina PAINEL_SENHA (8 caracteres ou mais) no .env.local para usar o painel.</p>
       </main>
@@ -93,16 +98,16 @@ async function Conteudo({ searchParams }: Pick<PageProps<"/painel">, "searchPara
   if (!(await estaLogado())) {
     const erro = (await searchParams).erro;
     return (
-      <main className="compra">
+      <main className="pagina-compra">
         <h1 className="titulo">Painel da loja</h1>
-        <form action={login} style={{ marginTop: 20 }}>
+        <form action={login} className="cartao" style={{ marginTop: 24 }}>
           <div className="campo">
             <label htmlFor="senha">Senha</label>
             <input id="senha" name="senha" type="password" required autoComplete="current-password" />
           </div>
-          {erro && <p className="aviso aviso-erro">Senha errada.</p>}
+          {erro && <p className="aviso aviso-erro">Senha errada. Tente de novo.</p>}
           <button className="botao" type="submit">
-            Entrar
+            Entrar no painel
           </button>
         </form>
       </main>
@@ -112,39 +117,85 @@ async function Conteudo({ searchParams }: Pick<PageProps<"/painel">, "searchPara
   const lista = await pedidos().listar();
   const abertos = lista.filter((p) => p.status === "aguardando_pix" || p.status === "pago");
   const fechados = lista.filter((p) => !abertos.includes(p));
+  const aEntregar = lista.filter((p) => p.status === "pago");
+  const entregues = lista.filter((p) => p.status === "entregue");
+  const vendido = entregues.reduce((s, p) => s + p.valorCentavos, 0);
 
   return (
-    <main className="compra" style={{ maxWidth: 760 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <main className="painel">
+      <div className="painel-cabeca">
         <h1 className="titulo">Pedidos</h1>
-        <form action={logout}>
-          <button className="botao-secundario" type="submit">
-            Sair
-          </button>
-        </form>
+        {!painelAbertoSemSenha() && (
+          <form action={logout}>
+            <button className="botao-secundario" type="submit">
+              Sair
+            </button>
+          </form>
+        )}
       </div>
-      <p className="subtitulo">
-        {abertos.length} em aberto · {fechados.length} fechados. Confirme o Pix no extrato do banco antes de marcar
-        &quot;Pix caiu&quot;.
-      </p>
 
-      <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "grid", gap: 12 }}>
-        {abertos.map((p) => (
-          <LinhaPedido key={p.numero} p={p} />
-        ))}
-        {abertos.length === 0 && <li className="ajuda">Nenhum pedido em aberto.</li>}
-      </ul>
+      {modoDemo() && (
+        <div className="aviso aviso-demo" style={{ marginTop: 16, display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", justifyContent: "space-between" }}>
+          <p>
+            <b>Modo demonstração.</b> Sem chave Pix configurada, nenhum pagamento é real
+            {painelAbertoSemSenha() && " e o painel abre sem senha neste computador"}.
+          </p>
+          <form action={criarExemplos}>
+            <button className="botao-secundario" type="submit">
+              Criar pedidos de exemplo
+            </button>
+          </form>
+        </div>
+      )}
+
+      <div className="painel-numeros">
+        <div>
+          <b>{lista.filter((p) => p.status === "aguardando_pix").length}</b>
+          <span>Aguardando Pix</span>
+        </div>
+        <div>
+          <b>{aEntregar.length}</b>
+          <span>Pix caiu, falta entregar</span>
+        </div>
+        <div>
+          <b>{entregues.length}</b>
+          <span>Entregues</span>
+        </div>
+        <div>
+          <b className="dinheiro">{reais(vendido)}</b>
+          <span>Vendido (entregues)</span>
+        </div>
+      </div>
+
+      <h2>Em aberto</h2>
+      {abertos.length > 0 ? (
+        <ul className="lista-pedidos">
+          {abertos.map((p) => (
+            <LinhaPedido key={p.numero} p={p} />
+          ))}
+        </ul>
+      ) : (
+        <div className="vazio" style={{ marginBottom: 36 }}>
+          <p>Nenhum pedido esperando Pix ou entrega.</p>
+          {lista.length === 0 && <Link href="/#pacotes">Fazer um pedido pelo site</Link>}
+        </div>
+      )}
 
       {fechados.length > 0 && (
-        <details>
-          <summary style={{ cursor: "pointer", fontWeight: 700, marginBottom: 12 }}>Fechados</summary>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>
+        <>
+          <h2>Fechados</h2>
+          <ul className="lista-pedidos">
             {fechados.map((p) => (
               <LinhaPedido key={p.numero} p={p} />
             ))}
           </ul>
-        </details>
+        </>
       )}
+
+      <p className="ajuda">
+        Antes de clicar em &quot;Pix caiu&quot;, confira o valor no extrato do banco. &quot;Entreguei&quot; só depois de
+        transferir as coins no jogo.
+      </p>
     </main>
   );
 }

@@ -1,49 +1,63 @@
-# Site da BellaCoins (MVP)
+# Site da BellaCoins
 
-Primeira versão do site, para testar o fluxo de compra. O visual ainda é básico, mas já usa as cores, as fontes e o logo da identidade v2.
+Site completo para visualizar, no **modo demonstração**: todas as telas existem e seguem a identidade v2, mas nenhum pagamento é real.
 
-## Rodar no computador
+## Ver no computador
 
 ```bash
 cd site
 npm install
-cp .env.example .env.local   # preencher a chave Pix e a senha do painel
-npm run dev                  # abre em http://localhost:3000
+npm run dev        # abre em http://localhost:3000
 ```
 
-Precisa de Node 20 ou mais novo e de internet: a conferência do personagem usa a API pública TibiaData.
+Não precisa de `.env` para ver. Precisa de Node 20 ou mais novo e de internet (fontes e a conferência do personagem na TibiaData).
 
-## Telas
+## Páginas
 
 | Endereço | O que é |
 |---|---|
-| `/` | Tela 1: escolher o pacote (o mais vendido fica no topo) |
-| `/comprar?tc=250` | Tela 2: nome do personagem e WhatsApp. O site confere o char na TibiaData e mostra mundo e level para o cliente confirmar |
-| `/pedido/<token>` | Tela 3: total, QR code e Pix copia e cola. Atualiza sozinha a cada 15 s até o pedido ser entregue |
-| `/painel` | Lista de pedidos, protegida por senha. Botões "Pix caiu", "Entreguei", "Cancelar", "Reembolsei" |
+| `/` | Vitrine com a moeda, pacotes (tela 1), como funciona, regras resumidas e dúvidas |
+| `/comprar?tc=250` | Tela 2: nome do personagem e WhatsApp. Confere o char na TibiaData de verdade e mostra mundo e level |
+| `/pedido/<token>` | Tela 3: QR code e Pix copia e cola, andamento do pedido e recibo quando entregue |
+| `/regras` | Regras da loja (**rascunho**, revisar antes de abrir) |
+| `/painel` | Pedidos com totais e botões "Pix caiu", "Entreguei", "Cancelar", "Reembolsei" |
 
-O link do pedido usa um token aleatório. O número `BC-0001` aparece na tela, mas não dá acesso a nada (assim ninguém vê o pedido dos outros trocando o número).
+## Modo demonstração
 
-## Como funciona hoje
+Liga sozinho enquanto `PIX_CHAVE` estiver vazio:
 
-- **Pix estático**: o código copia e cola é gerado com a chave da loja (`PIX_CHAVE`), já com o valor e o número do pedido. O cliente paga direto na conta da loja.
-- **Confirmação manual**: quando o Pix aparecer no extrato, clicar em "Pix caiu" no painel. A tela do cliente muda sozinha.
-- **Entrega manual**: transferir as coins no jogo e clicar em "Entreguei". Nada de bot ou script na conta do Tibia.
-- **Pedidos num arquivo** (`.dados/pedidos.json`, fora do git). Só serve no computador; na Vercel o disco não guarda nada.
+- O Pix mostrado é um texto de exemplo com o selo "Exemplo". Se alguém escanear, o banco recusa.
+- A página do pedido tem botões para simular "Pix recebido", "Entregue" e "Cancelado".
+- No computador (`npm run dev`), o `/painel` abre sem senha e tem o botão "Criar pedidos de exemplo".
+- Os pedidos ficam em `.dados/pedidos.json` (fora do git). Para começar do zero, apague esse arquivo.
 
-## Já preparado para a próxima etapa
+Com `PIX_CHAVE`, `PIX_NOME` e `PIX_CIDADE` preenchidos, o Pix vira real (BR Code com valor e número do pedido) e a simulação some. O painel passa a pedir `PAINEL_SENHA`.
 
-| Peça | Onde mexer |
+## Supabase
+
+A tabela `pedidos` já existe no projeto Supabase **bellacoins** (`cyruigouzeigkjhzqdgv`, São Paulo). O SQL aplicado está em `supabase/migrations/0001_pedidos.sql`:
+
+- `numero` (`BC-0001`, sequência própria) e `token` são gerados pelo banco.
+- `atualizado_em` muda sozinho a cada alteração.
+- RLS ligado e nenhum acesso para `anon`/`authenticated`: só o servidor do site, com a chave `service_role`, lê e escreve. O aviso "RLS enabled no policy" do Supabase é esperado.
+
+O site **ainda não usa** o Supabase (os pedidos ficam no arquivo local). Para ligar: criar `src/lib/pedidos/supabase.ts` com a interface de `src/lib/pedidos/tipos.ts`, escolher em `src/lib/pedidos/index.ts` por `PEDIDOS_ARMAZENAMENTO=supabase` e pôr `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` no `.env.local` (a chave fica em Project Settings → API Keys, nunca no navegador).
+
+## Onde mexer
+
+| Peça | Arquivo |
 |---|---|
-| Preço e pacotes | `src/config/loja.ts` (o preço de R$ 52 por 250 TC é **provisório**) |
-| Banco de dados (Supabase) | Tabela pronta em `supabase/migrations/0001_pedidos.sql`. Criar `src/lib/pedidos/supabase.ts` com a mesma interface de `src/lib/pedidos/tipos.ts` e ligar em `src/lib/pedidos/index.ts` |
-| Pix automático (gateway) | Trocar `gerarCobranca()` em `src/lib/pagamento.ts` e marcar "pago" pelo webhook do gateway. Antes, conferir se o gateway aceita venda de moeda de jogo |
-| Visual | Tokens da marca em `src/app/globals.css` (cópia de `marca/cores.css`), fontes em `src/app/layout.tsx`, logo em `src/components/Logo.tsx`. Modo vitrine no topo, modo compra nas telas |
-| Login do painel | `src/lib/admin.ts` (hoje é uma senha só, em `PAINEL_SENHA`) |
-| Publicar | Vercel, com a pasta `site` como raiz do projeto. Só depois de ligar o Supabase |
+| Preço, pacotes, prazo e horário | `src/config/loja.ts` (o preço de R$ 52 por 250 TC, o prazo e o horário são **provisórios**) |
+| Textos das dúvidas e da vitrine | `src/app/page.tsx` |
+| Regras | `src/app/regras/page.tsx` |
+| Cores, fontes, componentes visuais | `src/app/globals.css` (tokens copiados de `marca/cores.css`), `src/app/layout.tsx`, `src/components/` |
+| Pix e gateway | `src/lib/pagamento.ts` (`gerarCobranca`) |
+| Login do painel | `src/lib/admin.ts` |
 
 ## Pendências conhecidas
 
-- **Números de pedido duplicados**: o site e a skill `registrar-venda` (`financeiro/vendas.csv`) numeram `BC-NNNN` cada um por conta. Antes de usar os dois juntos, decidir quem é a fonte do número.
-- A TibiaData responde erro 502 tanto para nome inexistente quanto quando está com problema. O site consulta um personagem conhecido para separar os dois casos. Se a API estiver fora, o pedido entra marcado "não conferido" e o painel avisa para conferir à mão.
-- Ainda não há limite de pedidos por pessoa nem proteção contra robôs (adicionar antes de divulgar o site).
+- **Números de pedido duplicados**: o site e a skill `registrar-venda` (`financeiro/vendas.csv`) numeram `BC-NNNN` cada um por conta. Decidir quem é a fonte do número antes de usar os dois juntos.
+- **Publicar**: na Vercel o disco não guarda arquivos, então o site só pode ir para lá depois de ligar o Supabase.
+- A TibiaData responde 502 tanto para nome inexistente quanto quando está com problema. O site consulta um personagem conhecido para separar os dois casos; se a API estiver fora, o pedido entra "não conferido" e o painel avisa.
+- Falta limite de pedidos por pessoa e proteção contra robôs antes de divulgar.
+- Instagram e Discord aparecem como "em breve" no rodapé; o WhatsApp entra com `NEXT_PUBLIC_WHATSAPP_URL`.

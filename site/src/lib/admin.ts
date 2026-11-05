@@ -1,6 +1,7 @@
 import "server-only";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
+import { painelAbertoSemSenha } from "./demo";
 
 // Acesso ao /painel com uma senha só (PAINEL_SENHA). Basta para o MVP; trocar por login de verdade
 // (ex.: Supabase Auth) quando mais de uma pessoa operar a loja.
@@ -23,10 +24,11 @@ function iguais(a: string, b: string): boolean {
 }
 
 export function painelConfigurado(): boolean {
-  return senha() !== null;
+  return senha() !== null || painelAbertoSemSenha();
 }
 
 export async function estaLogado(): Promise<boolean> {
+  if (painelAbertoSemSenha()) return true;
   const s = senha();
   if (!s) return false;
   const valor = (await cookies()).get(COOKIE)?.value;

@@ -1,4 +1,4 @@
-// Configuração da loja. Mudar preço e pacotes aqui.
+// Configuração da loja. Mudar preço, pacotes e textos de atendimento aqui.
 // Valores em centavos (inteiros) para não ter erro de arredondamento.
 
 // PROVISÓRIO: o preço ainda não foi decidido (docs/negocio.md sugere R$ 52 a R$ 53 por 250 TC).
@@ -9,7 +9,7 @@ export type Pacote = {
   maisVendido?: boolean;
 };
 
-// O primeiro da lista aparece no topo (identidade: "mais vendido no topo").
+// O primeiro da lista aparece primeiro (identidade: "mais vendido no topo").
 export const PACOTES: Pacote[] = [
   { tc: 250, maisVendido: true },
   { tc: 500 },
@@ -30,8 +30,9 @@ export function pacoteValido(tc: number): boolean {
 export const LOJA = {
   nome: "BellaCoins",
   slogan: "Pagou no Pix, chegou no char.",
-  // Prazo mostrado ao cliente depois que o Pix cai. Ajustar quando as regras da loja estiverem escritas.
-  prazoEntrega: "em até 30 minutos, das 9h às 23h",
-  // Link de contato (WhatsApp Business). Vazio = não mostra.
+  // PROVISÓRIOS: ajustar quando as regras da loja estiverem escritas.
+  prazoEntrega: "em até 30 minutos",
+  horario: "todos os dias, das 9h às 23h",
+  // Link de contato (WhatsApp Business). Vazio = mostra "em breve".
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL ?? "",
 };
