@@ -15,7 +15,8 @@ Página da identidade: https://claude.ai/artifact/Tgyh37b4QHifte61phAuL7 (cópia
 | `marca/logo/` | Logos em SVG e, em `png/`, prontos para Instagram, WhatsApp e Discord |
 | `marca/fontes/` | As quatro fontes da marca (licença livre OFL) |
 | `marca/cores.css` | Cores e fontes prontas para usar no site |
-| `financeiro/` | Planilhas de controle de compras e vendas (CSV, abre no Excel ou Google Sheets) |
+| `financeiro/` | Planilhas de controle de compras e vendas (CSV, abre no Excel ou Google Sheets). Os CSVs ficam **fora do Git** (repositório público, dados de clientes); faça backup à parte |
+| `site/` | Site (Next.js + Supabase, publicado na Vercel). Como rodar e onde fica cada coisa: `site/README.md` |
 | `.claude/skills/` | Skills do Claude Code para a loja (veja abaixo) |
 | `.claude/settings.json` | Plugins do Claude Code ligados no projeto (hoje: Canva) |
 | `skills-lock.json` | Origem e versão (hash) de cada skill de terceiros instalada; não editar à mão |
@@ -69,7 +70,7 @@ Quando o site começar: `bash scripts/instalar-skills.sh --site` (Supabase, Verc
 
 ## Depois
 
-- Site com catálogo, Pix automático, conferência do personagem e painel de pedidos (o fluxo de 3 telas está na página da identidade)
+- Site com catálogo, Pix automático, conferência do personagem e painel de pedidos (o fluxo de 3 telas está na página da identidade). A base já existe em `site/` (página provisória + ligação com o Supabase).
 - Outros formatos de arte (stories 1080x1920, tabela de preços) a partir de `.claude/skills/arte-preco-do-dia/modelo-feed.svg`. O post de feed do "preço do dia" já está pronto.
 
 ## Regras que não mudam

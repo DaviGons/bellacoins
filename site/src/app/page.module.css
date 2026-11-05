@@ -1,0 +1,181 @@
+/* Modo vitrine: degradê, moeda grande, brilhos, padrão de moedas, até 2 selos. */
+.vitrine {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 50% at 80% 10%, rgba(255, 46, 136, 0.35), transparent 70%),
+    radial-gradient(50% 45% at 10% 90%, rgba(255, 194, 61, 0.22), transparent 70%),
+    var(--bc-noite);
+}
+
+/* padrão de moedas em SVG, discreto */
+.padrao {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Ccircle cx='18' cy='18' r='10' fill='none' stroke='%23FFC23D' stroke-width='2'/%3E%3Ccircle cx='54' cy='54' r='10' fill='none' stroke='%23FFC23D' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+.logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.bella {
+  font-family: var(--bc-f-bella);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.coins {
+  font-family: var(--bc-f-titulo);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--bc-ouro);
+}
+
+.palco {
+  position: relative;
+  flex: 1;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  gap: 40px;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+@media (min-width: 860px) {
+  .palco {
+    grid-template-columns: 1fr 1.2fr;
+    justify-items: start;
+  }
+  .moeda {
+    justify-self: center;
+  }
+}
+
+.moeda {
+  position: relative;
+  width: min(260px, 70vw);
+  aspect-ratio: 1;
+  filter: drop-shadow(0 18px 50px rgba(255, 46, 136, 0.45));
+}
+
+.moeda img {
+  width: 100%;
+  height: auto;
+}
+
+.brilho {
+  position: absolute;
+  color: var(--bc-perola);
+  text-shadow: 0 0 12px var(--bc-magenta);
+  line-height: 1;
+}
+
+.brilho1 {
+  top: -6%;
+  left: -10%;
+  font-size: 34px;
+}
+
+.brilho2 {
+  bottom: 4%;
+  right: -12%;
+  font-size: 22px;
+  color: var(--bc-ouro);
+}
+
+.selo {
+  position: absolute;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: var(--bc-f-titulo);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* abaixo do brilho do símbolo (canto superior direito da moeda), que não pode ser coberto */
+.selo1 {
+  top: 40%;
+  right: -24%;
+  background: var(--bc-ouro);
+  color: var(--bc-noite);
+  transform: rotate(6deg);
+}
+
+.selo2 {
+  bottom: -4%;
+  left: -18%;
+  background: var(--bc-magenta);
+  color: var(--bc-perola);
+  transform: rotate(-5deg);
+}
+
+.texto {
+  max-width: 560px;
+  text-align: center;
+}
+
+@media (min-width: 860px) {
+  .texto {
+    text-align: left;
+  }
+}
+
+.titulo {
+  margin: 0 0 20px;
+  font-family: var(--bc-f-titulo);
+  font-weight: 800;
+  font-size: clamp(32px, 6vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+/* a única palavra de destaque em Fraunces */
+.destaque {
+  font-family: var(--bc-f-bella);
+  font-style: italic;
+  font-weight: 900;
+  background: var(--bc-brilho);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.06em;
+}
+
+.sub {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: rgba(255, 244, 248, 0.82);
+}
+
+.rodape {
+  position: relative;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 13px;
+  color: var(--bc-lilas);
+  text-align: center;
+}
