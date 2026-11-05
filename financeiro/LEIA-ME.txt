@@ -1,0 +1,7 @@
+Planilhas de controle (separador ;, abre direto no Excel em português).
+
+- compras.csv: cada lote de coins comprado de fornecedor.
+- vendas.csv: cada pedido. custo_rs = quantidade_tc / 250 x preço pago por 250. lucro_rs = valor_recebido_rs - custo_rs.
+- status: aguardando, entregue, cancelado, reembolsado.
+
+Guardar todos os comprovantes: são a prova para a Receita de que o dinheiro que entrou era revenda, não renda.

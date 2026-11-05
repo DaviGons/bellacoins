@@ -1,0 +1,31 @@
+# Dados financeiros reais (clientes, chars, comprovantes de Pix): nunca no repositório público.
+# A skill registrar-venda recria os CSVs com cabeçalho quando eles não existem.
+financeiro/*.csv
+
+# Segredos
+.env
+.env*.local
+.env.production
+!.env.example
+
+# Claude Code (config pessoal)
+.claude/settings.local.json
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+
+# Supabase CLI
+supabase/.temp/
+supabase/.branches/
+
+# Python / sistema
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

@@ -1,0 +1,26 @@
+/* BellaCoins: cores e fontes da marca (identidade visual v2) */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,900&family=Unbounded:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap");
+
+:root {
+  /* paleta */
+  --bc-noite: #160A24;      /* Noite Ameixa: fundo */
+  --bc-noite-2: #21103A;    /* superfície */
+  --bc-noite-3: #2E1850;    /* superfície elevada */
+  --bc-magenta: #FF2E88;    /* Magenta Bella: ações */
+  --bc-coral: #FF7A45;
+  --bc-ouro: #FFC23D;       /* Ouro Bella: moeda, preços, selos */
+  --bc-lilas: #B79CFF;      /* apoio */
+  --bc-perola: #FFF4F8;     /* telas de compra, textos */
+  --bc-brilho: linear-gradient(115deg, #FF2E88 0%, #FF7A45 50%, #FFC23D 100%);
+
+  /* status de pedido */
+  --bc-entregue: #3DDBB4;
+  --bc-aguardando: #FFC23D;
+  --bc-cancelado: #FF5C5C;
+
+  /* fontes */
+  --bc-f-bella: "Fraunces", Georgia, serif;                       /* só "Bella", itálico 900 */
+  --bc-f-titulo: "Unbounded", "Arial Black", sans-serif;
+  --bc-f-texto: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --bc-f-numero: "DM Mono", ui-monospace, monospace;
+}

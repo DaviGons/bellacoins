@@ -1,0 +1,604 @@
+<title>BellaCoins Identidade Visual</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,700;1,9..144,900&family=Unbounded:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: brand book noturno. Chamativo na marca (hero, padrões, posts), calmo na compra (telas de checkout). Visual único escuro, por escolha. */
+:root{
+  color-scheme:dark;
+  --noite:#160A24;      /* Noite Ameixa: fundo */
+  --noite-2:#21103A;    /* superfície */
+  --noite-3:#2E1850;    /* superfície elevada */
+  --magenta:#FF2E88;    /* Magenta Bella: ação */
+  --coral:#FF7A45;
+  --ouro:#FFC23D;       /* Ouro Bella: moeda */
+  --lilas:#B79CFF;      /* Lilás: apoio */
+  --perola:#FFF4F8;     /* Pérola: texto/claro */
+  --menta:#3DDBB4;      /* sucesso */
+  --fg:#F6EEF8;
+  --muted:#B9A8CC;
+  --line:rgba(255,244,248,.12);
+  --brilho:linear-gradient(115deg,#FF2E88 0%,#FF7A45 50%,#FFC23D 100%);
+
+  --f-bella:"Fraunces", "Georgia", "Times New Roman", serif;
+  --f-display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body:"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"DM Mono", ui-monospace, Menlo, monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--noite);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+h1,h2,h3,h4{margin:0;text-wrap:balance;line-height:1.1}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(1.6rem,3.6vw,2.4rem);letter-spacing:-.01em}
+h3{font-family:var(--f-display);font-weight:500;font-size:1.05rem}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro);display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:9px;height:9px;background:var(--magenta);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.lede{color:var(--muted);max-width:64ch}
+section.chapter{padding-block:80px;border-top:1px solid var(--line)}
+.chapter-head{display:grid;gap:14px;margin-bottom:40px}
+.num{font-variant-numeric:tabular-nums}
+.grad{background:var(--brilho);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* WORDMARK */
+.wm{display:inline-flex;align-items:baseline;gap:.12em;white-space:nowrap}
+.wm .b{font-family:var(--f-bella);font-style:italic;font-weight:900;letter-spacing:-.02em}
+.wm .c{font-family:var(--f-display);font-weight:800;font-size:.42em;letter-spacing:.14em;color:var(--ouro)}
+.lockup{display:inline-flex;align-items:center;gap:.5em}
+.lockup svg{flex:none}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(60% 80% at 85% 30%, rgba(255,46,136,.35), transparent 60%),
+  radial-gradient(50% 70% at 70% 90%, rgba(255,194,61,.22), transparent 60%),
+  radial-gradient(40% 60% at 5% 0%, rgba(183,156,255,.18), transparent 60%),
+  var(--noite)}
+.hero::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 14l2 6 6 2-6 2-2 6-2-6-6-2 6-2z' fill='%23FFF4F8' opacity='.35'/%3E%3Cpath d='M86 70l1.4 4 4 1.4-4 1.4-1.4 4-1.4-4-4-1.4 4-1.4z' fill='%23FFC23D' opacity='.45'/%3E%3Ccircle cx='60' cy='30' r='1.2' fill='%23FFF4F8' opacity='.4'/%3E%3Ccircle cx='100' cy='108' r='1' fill='%23FF2E88' opacity='.6'/%3E%3C/svg%3E");pointer-events:none}
+.hero .wrap{position:relative;z-index:1;padding-block:72px 64px;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center}
+.hero-text{display:grid;gap:22px;min-width:0}
+.hero .wm{font-size:clamp(3.6rem,11vw,7.4rem);line-height:.9}
+.hero .wm .b{background:var(--brilho);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+.slogan{font-family:var(--f-display);font-weight:700;font-size:clamp(1.1rem,2.6vw,1.6rem);line-height:1.25}
+.slogan em{font-style:normal;color:var(--ouro)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.03)}
+.coin-stage{display:grid;place-items:center;perspective:900px;min-height:300px}
+.coin3d{width:min(260px,60vw);aspect-ratio:1;position:relative;transform-style:preserve-3d;animation:spin 7s cubic-bezier(.6,.05,.4,.95) infinite;filter:drop-shadow(0 30px 40px rgba(255,46,136,.35))}
+.coin3d svg{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden}
+.coin3d .back{transform:rotateY(180deg)}
+.coin-shadow{width:52%;height:16px;margin-top:18px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent);animation:shadow 7s cubic-bezier(.6,.05,.4,.95) infinite}
+@keyframes spin{0%,30%{transform:rotateY(0) translateY(0)}50%{transform:rotateY(180deg) translateY(-10px)}80%,100%{transform:rotateY(360deg) translateY(0)}}
+@keyframes shadow{0%,30%,80%,100%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.7);opacity:.6}}
+
+/* PRINCIPLE BANNER */
+.thesis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.thesis > div{padding:28px;display:grid;gap:10px;align-content:start}
+.thesis .loud{background:var(--brilho);color:var(--noite)}
+.thesis .loud h3,.thesis .calm h3{font-size:1.3rem;font-weight:700}
+.thesis .loud p{color:#2A0F2B;font-weight:500}
+.thesis .calm{background:var(--noite-2)}
+.thesis .calm p{color:var(--muted)}
+.thesis ul{margin:0;padding-left:1.1em;display:grid;gap:4px;font-size:.94rem}
+
+/* LOGO */
+.logo-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px}
+.tile{border-radius:22px;min-height:220px;display:grid;place-items:center;position:relative;overflow:hidden;padding:24px}
+.tile .cap{position:absolute;left:16px;bottom:12px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.t-dark{background:radial-gradient(70% 90% at 80% 20%,rgba(255,46,136,.3),transparent 60%),var(--noite-2);border:1px solid var(--line)}
+.t-light{background:var(--perola);color:var(--noite)}
+.t-light .cap{color:var(--noite)}
+.t-light .wm .c{color:#C2410C}
+.t-grad{background:var(--brilho);color:var(--noite)}
+.t-grad .cap{color:var(--noite)}
+.tile .wm{font-size:clamp(2.6rem,5vw,3.6rem)}
+.t-light .wm .b{color:#B0125F}
+.avatar{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:var(--noite);box-shadow:0 0 0 4px var(--perola),0 0 0 6px rgba(22,10,36,.25)}
+.avatar svg{width:88px;height:88px}
+.mono-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px}
+.mono{flex:1 1 200px;border:1px dashed var(--line);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px}
+.mono svg{width:44px;height:44px;flex:none}
+.mono p{font-size:.88rem;color:var(--muted)}
+.mono b{display:block;color:var(--fg);font-weight:600}
+
+/* PALETA */
+.swatches{display:grid;grid-template-columns:2.2fr 1.3fr 1.3fr 1fr 1fr;gap:12px}
+.sw{border-radius:20px;min-height:220px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.sw .n{font-family:var(--f-display);font-weight:700;font-size:1rem;line-height:1.2}
+.sw .h{font-family:var(--f-mono);font-size:.8rem}
+.sw .u{font-size:.8rem;line-height:1.4;opacity:.85}
+.sw-noite{background:var(--noite-2);border:1px solid var(--line);color:var(--fg)}
+.sw-magenta{background:var(--magenta);color:var(--noite)}
+.sw-ouro{background:var(--ouro);color:var(--noite)}
+.sw-lilas{background:var(--lilas);color:var(--noite)}
+.sw-perola{background:var(--perola);color:var(--noite)}
+.gradbar{margin-top:12px;border-radius:20px;padding:22px;background:var(--brilho);color:var(--noite);display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.gradbar b{font-family:var(--f-display);font-weight:800;font-size:1.3rem}
+.gradbar span{font-family:var(--f-mono);font-size:.78rem}
+.semantic{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chip{font-family:var(--f-mono);font-size:.76rem;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--noite-2);display:inline-flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+/* TIPOGRAFIA */
+.type-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.type-card{background:var(--noite-2);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:12px;align-content:start;min-width:0}
+.type-card .role{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ouro)}
+.type-card .fam{font-weight:700}
+.type-card p.d{color:var(--muted);font-size:.9rem}
+.s1{font-family:var(--f-bella);font-style:italic;font-weight:900;font-size:3.2rem;line-height:1}
+.s2{font-family:var(--f-display);font-weight:800;font-size:1.7rem;line-height:1.1}
+.s3{font-family:var(--f-body);font-weight:700;font-size:1.5rem;line-height:1.1}
+.s4{font-family:var(--f-mono);font-size:1.5rem;line-height:1.1}
+
+/* ELEMENTOS */
+.elements{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.pattern{border-radius:22px;min-height:300px;background-color:var(--noite-2);border:1px solid var(--line);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFD873'/%3E%3Cstop offset='1' stop-color='%23F59E0B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='24' cy='24' r='13' fill='url(%23g)'/%3E%3Ccircle cx='24' cy='24' r='10' fill='none' stroke='%23B45309' stroke-width='1' stroke-dasharray='1.5 2'/%3E%3Cpath d='M72 66l2.4 7 7 2.4-7 2.4-2.4 7-2.4-7-7-2.4 7-2.4z' fill='%23FF2E88'/%3E%3Cpath d='M76 18l1.2 3.4 3.4 1.2-3.4 1.2-1.2 3.4-1.2-3.4-3.4-1.2 3.4-1.2z' fill='%23FFF4F8' opacity='.7'/%3E%3Ccircle cx='28' cy='76' r='2' fill='%23B79CFF'/%3E%3C/svg%3E");position:relative;overflow:hidden}
+.pattern .cap{position:absolute;left:16px;bottom:12px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;background:var(--noite);padding:4px 10px;border-radius:999px}
+.el-stack{display:grid;gap:16px}
+.el{background:var(--noite-2);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:14px}
+.el p{font-size:.88rem;color:var(--muted)}
+.stickers{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sticker{font-family:var(--f-display);font-weight:800;font-size:.72rem;letter-spacing:.06em;padding:8px 14px;border-radius:999px;text-transform:uppercase;white-space:nowrap}
+.st1{background:var(--ouro);color:var(--noite);transform:rotate(-4deg)}
+.st2{background:var(--magenta);color:var(--perola);transform:rotate(3deg)}
+.st3{background:var(--perola);color:var(--noite);transform:rotate(-2deg)}
+.st4{border:1.5px solid var(--lilas);color:var(--lilas)}
+.sparkles{display:flex;gap:18px;align-items:center}
+.sparkles svg{flex:none}
+
+/* USABILIDADE */
+.phones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.step{display:grid;gap:14px;align-content:start;min-width:0}
+.step-h{display:flex;gap:12px;align-items:baseline}
+.step-h .n{font-family:var(--f-display);font-weight:800;font-size:1.6rem;color:var(--magenta)}
+.step-h p{color:var(--muted);font-size:.9rem}
+.step-h b{color:var(--fg);display:block;font-size:1rem}
+.phone{background:#0E0618;border:1px solid var(--line);border-radius:34px;padding:12px;max-width:320px;width:100%}
+.screen{background:var(--perola);color:#1E1029;border-radius:24px;min-height:500px;display:flex;flex-direction:column;overflow:hidden}
+.scr-top{background:var(--noite);color:var(--perola);padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.scr-top .wm{font-size:1.4rem}
+.scr-top small{font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
+.scr-body{padding:18px;display:grid;gap:12px;align-content:start;flex:1}
+.scr-body h4{font-family:var(--f-body);font-weight:800;font-size:1.15rem}
+.scr-body .hint{font-size:.8rem;color:#6B5A7A}
+.pack{border:1.5px solid #E6D9E8;border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:#fff}
+.pack.sel{border-color:var(--magenta);box-shadow:0 0 0 3px rgba(255,46,136,.15)}
+.pack .q{font-family:var(--f-mono);font-weight:500;font-size:1rem}
+.pack .q small{display:block;font-family:var(--f-body);font-size:.72rem;color:#6B5A7A}
+.pack .v{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums}
+.badge-pop{font-family:var(--f-display);font-size:.58rem;font-weight:700;background:var(--ouro);color:var(--noite);padding:3px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;letter-spacing:.05em}
+.field{display:grid;gap:6px}
+.field label{font-size:.78rem;font-weight:700}
+.field input{font:inherit;font-size:1rem;padding:12px 14px;border-radius:14px;border:1.5px solid var(--menta);background:#fff;color:#1E1029;width:100%}
+.found{display:flex;gap:10px;align-items:center;background:#E5FBF4;border-radius:14px;padding:10px 12px;font-size:.84rem;color:#0F5A47}
+.found b{display:block}
+.summary{border-top:1px dashed #DCCDE0;padding-top:12px;display:grid;gap:6px;font-size:.86rem}
+.summary div{display:flex;justify-content:space-between}
+.summary .tot{font-weight:800;font-size:1rem}
+.summary .tot span:last-child{font-family:var(--f-mono)}
+.cta{margin:auto 18px 18px;font-family:var(--f-body);font-weight:800;font-size:1rem;padding:16px;border-radius:16px;border:0;background:var(--magenta);color:#fff;cursor:pointer;box-shadow:0 10px 24px rgba(255,46,136,.35)}
+.cta:focus-visible{outline:3px solid var(--ouro);outline-offset:3px}
+.qr{width:150px;height:150px;justify-self:center;border-radius:12px;background:#fff;padding:10px;border:1.5px solid #E6D9E8}
+.copy{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px dashed #DCCDE0;border-radius:12px;padding:10px 12px;font-family:var(--f-mono);font-size:.74rem;color:#6B5A7A;overflow:hidden}
+.copy span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.copy b{font-family:var(--f-body);color:var(--magenta);font-size:.78rem}
+.timer{text-align:center;font-size:.8rem;color:#6B5A7A}
+.timer b{font-family:var(--f-mono);color:#1E1029}
+.rules-u{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:32px}
+.rules-u div{background:var(--noite-2);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:6px}
+.rules-u b{font-weight:700}
+.rules-u p{color:var(--muted);font-size:.88rem}
+
+/* APLICAÇÕES */
+.apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.mock{min-width:0;display:grid;gap:10px;align-content:start}
+.mock-label{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.post{aspect-ratio:4/5;border-radius:22px;overflow:hidden;position:relative;background:
+  radial-gradient(80% 60% at 100% 0%,rgba(255,46,136,.55),transparent 60%),
+  radial-gradient(70% 50% at 0% 100%,rgba(255,194,61,.35),transparent 60%),var(--noite);
+  padding:22px;display:flex;flex-direction:column;justify-content:space-between;max-width:100%}
+.post .top{display:flex;justify-content:space-between;align-items:center}
+.post .top .wm{font-size:1.5rem}
+.post .date{font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.post .coin-big{position:absolute;right:-40px;top:70px;width:200px;height:200px;transform:rotate(-14deg);opacity:.95}
+.post .mid{position:relative;display:grid;gap:4px}
+.post .k{font-family:var(--f-display);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ouro)}
+.post .big{font-family:var(--f-display);font-weight:800;font-size:clamp(2.6rem,5vw,3.4rem);line-height:1}
+.post .big small{font-size:.45em}
+.post .foot{position:relative;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;font-size:.78rem}
+.chat{background:#0B0613;border:1px solid var(--line);border-radius:22px;padding:16px;display:grid;gap:10px;align-content:start}
+.chat-head{display:flex;align-items:center;gap:10px;font-size:.9rem;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.chat-head svg{width:34px;height:34px}
+.chat-head small{display:block;color:var(--muted);font-size:.72rem}
+.bubble{background:#1E1230;padding:10px 12px;max-width:92%;font-size:.86rem;line-height:1.5;border-radius:4px 14px 14px 14px}
+.bubble.me{justify-self:end;background:#3A1A4F;border-radius:14px 4px 14px 14px}
+.bubble .t{display:block;text-align:right;font-family:var(--f-mono);font-size:.64rem;color:var(--muted);margin-top:2px}
+.bubble b{color:var(--ouro)}
+.receipt{background:var(--perola);color:#1E1029;border-radius:22px;padding:22px;display:grid;gap:14px;align-content:start;position:relative;overflow:hidden}
+.receipt::before{content:"";position:absolute;inset:0 0 auto;height:8px;background:var(--brilho)}
+.receipt .rh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:6px}
+.receipt .rh .wm{font-size:1.4rem}
+.receipt .rh .wm .b{color:#B0125F}
+.receipt .rh .wm .c{color:#C2410C}
+.receipt .id{font-family:var(--f-mono);font-size:.74rem;text-align:right;color:#6B5A7A}
+.receipt .status{justify-self:start;display:inline-flex;align-items:center;gap:8px;background:#E5FBF4;color:#0F5A47;font-weight:700;font-size:.8rem;padding:6px 12px;border-radius:999px}
+.receipt dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:.88rem}
+.receipt dt{color:#6B5A7A}
+.receipt dd{margin:0;text-align:right;font-family:var(--f-mono)}
+.receipt .total{border-top:1.5px dashed #DCCDE0;padding-top:12px;display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem}
+.receipt .total span:last-child{font-family:var(--f-mono)}
+.example{font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
+
+/* VOZ + CUIDADOS */
+.voice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.voice-col{background:var(--noite-2);border:1px solid var(--line);border-radius:22px;padding:24px;display:grid;gap:12px;align-content:start}
+.voice-col ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.voice-col li{padding:10px 14px;border-radius:14px;font-size:.95rem}
+.yes li{background:rgba(61,219,180,.08);border:1px solid rgba(61,219,180,.3)}
+.no li{background:rgba(255,46,136,.06);border:1px solid rgba(255,46,136,.25);color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(255,46,136,.6)}
+.rules{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rules li{background:var(--noite-2);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;grid-template-columns:28px 1fr;gap:10px}
+.rules .x{color:var(--magenta);font-weight:800}
+.rules .c{color:var(--menta);font-weight:800}
+.rules p{color:var(--muted);font-size:.9rem}
+.rules b{display:block}
+footer{padding-block:40px 64px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .coin-stage{min-height:240px}
+  .logo-grid{grid-template-columns:1fr 1fr}
+  .logo-grid .tile:first-child{grid-column:1 / -1}
+  .swatches{grid-template-columns:1fr 1fr}
+  .sw-noite{grid-column:1 / -1}
+  .sw{min-height:140px}
+  .type-grid{grid-template-columns:1fr 1fr}
+  .elements,.thesis,.voice,.rules{grid-template-columns:1fr}
+  .phones,.apps,.rules-u{grid-template-columns:1fr}
+  .phone{margin:0 auto}
+}
+@media (max-width:520px){
+  .logo-grid,.type-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  .coin3d,.coin-shadow{animation:none}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gOuro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE59A"/>
+      <stop offset=".45" stop-color="#FFC23D"/>
+      <stop offset="1" stop-color="#E8890C"/>
+    </linearGradient>
+    <linearGradient id="gBrilho" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF2E88"/>
+      <stop offset=".5" stop-color="#FF7A45"/>
+      <stop offset="1" stop-color="#FFC23D"/>
+    </linearGradient>
+    <!-- Marca: moeda dourada com B itálico e um brilho. -->
+    <symbol id="coin" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="url(#gOuro)"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#B45309" stroke-width="2"/>
+      <circle cx="50" cy="50" r="38.5" fill="none" stroke="#B45309" stroke-opacity=".55" stroke-width="1.4" stroke-dasharray="2 3"/>
+      <text x="48" y="69" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="900" font-size="58" fill="#160A24">B</text>
+      <path d="M78 6 L81.5 17.5 L93 21 L81.5 24.5 L78 36 L74.5 24.5 L63 21 L74.5 17.5 Z" fill="#FFF4F8" stroke="#FF2E88" stroke-width="1.6" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="coin-mono" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="4"/>
+      <circle cx="50" cy="50" r="37" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 3"/>
+      <text x="48" y="69" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="900" font-size="58" fill="currentColor">B</text>
+      <path d="M78 6 L81.5 17.5 L93 21 L81.5 24.5 L78 36 L74.5 24.5 L63 21 L74.5 17.5 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="spark" viewBox="0 0 40 40">
+      <path d="M20 0 L24.5 15.5 L40 20 L24.5 24.5 L20 40 L15.5 24.5 L0 20 L15.5 15.5 Z"/>
+    </symbol>
+    <symbol id="qr" viewBox="0 0 29 29">
+      <path fill="#1E1029" d="M0 0h7v7H0zM2 2v3h3V2zM22 0h7v7h-7zm2 2v3h3V2zM0 22h7v7H0zm2 2v3h3v-3zM9 0h2v2H9zm4 0h3v2h-3zm5 2h2v3h-2zM9 4h3v2H9zm5 1h2v2h-2zM9 8h2v3H9zm4 0h2v2h-2zm4 1h3v2h-3zm5-1h2v2h-2zm4 1h3v2h-3zM0 9h3v2H0zm5 0h2v3H5zm-3 4h2v2H2zm6 0h3v2H8zm5 0h2v4h-2zm4 0h2v2h-2zm4 1h3v2h-3zm5-1h2v3h-2zM0 17h3v2H0zm5 0h3v2H5zm5 1h2v2h-2zm7 0h3v2h-3zm5 0h2v2h-2zm4 2h3v2h-3zM9 22h2v3H9zm4-1h3v2h-3zm5 2h2v2h-2zm4 0h3v3h-3zm5 4h2v2h-2zM13 26h3v3h-3zm5 1h2v2h-2zm4 0h2v2h-2z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="eyebrow">Proposta de identidade visual · v2</span>
+      <h1 class="wm"><span class="b">Bella</span><span class="c">COINS</span></h1>
+      <p class="slogan">Pagou no Pix, <em>chegou no char.</em></p>
+      <div class="hero-meta"><span class="tag">Tibia Coins</span><span class="tag">Entrega em minutos</span><span class="tag">bellacoins.com.br</span></div>
+    </div>
+    <div class="coin-stage" aria-hidden="true">
+      <div class="coin3d">
+        <svg viewBox="0 0 100 100"><use href="#coin"/></svg>
+        <svg class="back" viewBox="0 0 100 100"><use href="#coin"/></svg>
+      </div>
+      <div class="coin-shadow"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="chapter" id="conceito">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">O conceito</span>
+        <h2>Chamativa na vitrine, <span class="grad">simples na compra</span></h2>
+        <p class="lede">A Bella tem uma marca com brilho, cor e personalidade, para se destacar no meio das lojas de cara séria e genérica. Mas a hora de pagar é outro momento: o cliente está mandando dinheiro e precisa de calma e clareza. Por isso a identidade tem dois modos.</p>
+      </div>
+      <div class="thesis">
+        <div class="loud">
+          <h3>Modo vitrine</h3>
+          <p>Instagram, stories, banners, topo do site, Discord.</p>
+          <ul>
+            <li>Degradê magenta → dourado</li>
+            <li>Moeda grande, brilhos e padrão de moedas</li>
+            <li>Selos coloridos e inclinados</li>
+          </ul>
+        </div>
+        <div class="calm">
+          <h3>Modo compra</h3>
+          <p>Escolher pacote, informar o personagem, pagar e acompanhar o pedido.</p>
+          <ul>
+            <li>Fundo pérola, texto escuro e letras grandes</li>
+            <li>Um único botão magenta por tela</li>
+            <li>Nenhum brilho ou animação competindo com o preço</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="logo">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Logo</span>
+        <h2>“Bella” com assinatura, “COINS” com peso</h2>
+        <p class="lede">“Bella” vai numa serifada itálica bem encorpada, com cara de assinatura e a personalidade da dona. “COINS” vem em caixa-alta larga e dourada, que dá firmeza. O símbolo é uma moeda de ouro com o B e um brilho no canto, e funciona sozinho como avatar.</p>
+      </div>
+      <div class="logo-grid">
+        <div class="tile t-dark">
+          <span class="lockup"><svg width="64" height="64" viewBox="0 0 100 100"><use href="#coin"/></svg><span class="wm"><span class="b grad">Bella</span><span class="c">COINS</span></span></span>
+          <span class="cap">Principal · fundo escuro</span>
+        </div>
+        <div class="tile t-light">
+          <span class="wm" style="font-size:2.4rem"><span class="b">Bella</span><span class="c">COINS</span></span>
+          <span class="cap">Fundo claro</span>
+        </div>
+        <div class="tile t-grad">
+          <div class="avatar"><svg viewBox="0 0 100 100"><use href="#coin"/></svg></div>
+          <span class="cap">Avatar</span>
+        </div>
+      </div>
+      <div class="mono-row">
+        <div class="mono"><svg viewBox="0 0 100 100" style="color:var(--perola)"><use href="#coin-mono"/></svg><p><b>Versão de uma cor</b>Para carimbo, marca-d’água em print e lugares que não aceitam degradê.</p></div>
+        <div class="mono"><svg viewBox="0 0 100 100"><use href="#coin"/></svg><p><b>Tamanho mínimo</b>Símbolo com 24 px. Abaixo disso, use só a moeda, sem o nome.</p></div>
+        <div class="mono"><svg viewBox="0 0 40 40" width="30" height="30" style="fill:var(--magenta)"><use href="#spark"/></svg><p><b>Não fazer</b>Não trocar a cor do B, não tirar o brilho da moeda e não pôr o logo em cima de foto sem uma faixa escura.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="cores">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Paleta</span>
+        <h2>Noite, magenta e ouro</h2>
+        <p class="lede">O fundo ameixa-escuro faz o magenta e o dourado brilharem sem parecer cassino. O magenta é a cor da ação: botões e destaques. O dourado é a cor da moeda e aparece no símbolo, em preços e em selos.</p>
+      </div>
+      <div class="swatches">
+        <div class="sw sw-noite"><span class="n">Noite Ameixa</span><div><div class="h">#160A24</div><div class="u">Fundo de quase tudo</div></div></div>
+        <div class="sw sw-magenta"><span class="n">Magenta Bella</span><div><div class="h">#FF2E88</div><div class="u">Botões e ações</div></div></div>
+        <div class="sw sw-ouro"><span class="n">Ouro Bella</span><div><div class="h">#FFC23D</div><div class="u">Moeda, preços, selos</div></div></div>
+        <div class="sw sw-lilas"><span class="n">Lilás</span><div><div class="h">#B79CFF</div><div class="u">Apoio, detalhes</div></div></div>
+        <div class="sw sw-perola"><span class="n">Pérola</span><div><div class="h">#FFF4F8</div><div class="u">Telas de compra, textos</div></div></div>
+      </div>
+      <div class="gradbar"><b>Brilho Bella</b><span>#FF2E88 → #FF7A45 → #FFC23D · só no modo vitrine</span></div>
+      <div class="semantic">
+        <span class="chip"><i class="dot" style="background:var(--menta)"></i>Entregue · #3DDBB4</span>
+        <span class="chip"><i class="dot" style="background:var(--ouro)"></i>Aguardando Pix · #FFC23D</span>
+        <span class="chip"><i class="dot" style="background:#FF5C5C"></i>Cancelado · #FF5C5C</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="tipografia">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Tipografia</span>
+        <h2>Quatro fontes, cada uma no seu lugar</h2>
+        <p class="lede">Todas são gratuitas no Google Fonts e existem no Canva, então quem fizer as artes usa as mesmas fontes do site.</p>
+      </div>
+      <div class="type-grid">
+        <div class="type-card"><span class="role">Assinatura</span><span class="s1 grad">Bella</span><span class="fam">Fraunces Black Italic</span><p class="d">Só no nome “Bella” e em uma palavra de destaque por arte. Nunca em frases.</p></div>
+        <div class="type-card"><span class="role">Títulos</span><span class="s2">250 TC</span><span class="fam">Unbounded</span><p class="d">Títulos, “COINS”, selos e números grandes nos posts.</p></div>
+        <div class="type-card"><span class="role">Texto</span><span class="s3">Comprar agora</span><span class="fam">Plus Jakarta Sans</span><p class="d">Textos, botões e telas de compra. Muito legível no celular.</p></div>
+        <div class="type-card"><span class="role">Números</span><span class="s4 num">R$ 52,00</span><span class="fam">DM Mono</span><p class="d">Preços, número do pedido e Pix copia e cola. Os valores ficam alinhados.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="elementos">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Elementos gráficos</span>
+        <h2>O kit que deixa tudo com cara de Bella</h2>
+        <p class="lede">São estes elementos que dão a complexidade visual. Combinados, qualquer arte fica reconhecível mesmo sem o logo.</p>
+      </div>
+      <div class="elements">
+        <div class="pattern"><span class="cap">Padrão de moedas · fundos de post e banners</span></div>
+        <div class="el-stack">
+          <div class="el">
+            <h3>Selos</h3>
+            <div class="stickers"><span class="sticker st1">Pix na hora</span><span class="sticker st2">Chegou no char</span><span class="sticker st3">Preço do dia</span><span class="sticker st4">Desde 2026</span></div>
+            <p>Sempre inclinados de leve e no máximo dois por arte.</p>
+          </div>
+          <div class="el">
+            <h3>Brilhos</h3>
+            <div class="sparkles">
+              <svg viewBox="0 0 40 40" width="36" height="36" style="fill:var(--ouro)"><use href="#spark"/></svg>
+              <svg viewBox="0 0 40 40" width="22" height="22" style="fill:var(--magenta)"><use href="#spark"/></svg>
+              <svg viewBox="0 0 40 40" width="28" height="28" style="fill:var(--perola)"><use href="#spark"/></svg>
+              <svg viewBox="0 0 40 40" width="16" height="16" style="fill:var(--lilas)"><use href="#spark"/></svg>
+            </div>
+            <p>A estrela de quatro pontas é o “✦” da marca. Use perto de preços e da moeda, nunca em cima de texto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="compra">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Usabilidade</span>
+        <h2>Comprar em três telas</h2>
+        <p class="lede">É o modo compra na prática. Cada tela tem uma pergunta e um botão, e o total aparece sempre antes do Pix. Preços e personagem são exemplos.</p>
+      </div>
+      <div class="phones">
+        <div class="step">
+          <div class="step-h"><span class="n">1</span><p><b>Escolher o pacote</b>Os mais comprados ficam no topo.</p></div>
+          <div class="phone"><div class="screen">
+            <div class="scr-top"><span class="wm"><span class="b grad">Bella</span><span class="c">COINS</span></span><small>Tibia Coins</small></div>
+            <div class="scr-body">
+              <h4>Quantas coins?</h4>
+              <div class="pack sel"><span class="q">250 TC <span class="badge-pop">Mais vendido</span><small>1 mês de Premium</small></span><span class="v">R$ 52,00</span></div>
+              <div class="pack"><span class="q">500 TC</span><span class="v">R$ 103,00</span></div>
+              <div class="pack"><span class="q">750 TC</span><span class="v">R$ 154,00</span></div>
+              <div class="pack"><span class="q">1.500 TC</span><span class="v">R$ 306,00</span></div>
+              <p class="hint">Outra quantidade? A partir de 25 TC, de 25 em 25.</p>
+            </div>
+            <button class="cta" id="cta1" type="button">Continuar</button>
+          </div></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">2</span><p><b>Informar o personagem</b>O site confere se ele existe antes do pagamento.</p></div>
+          <div class="phone"><div class="screen">
+            <div class="scr-top"><span class="wm"><span class="b grad">Bella</span><span class="c">COINS</span></span><small>250 TC</small></div>
+            <div class="scr-body">
+              <h4>Para qual personagem?</h4>
+              <div class="field"><label for="char">Nome do personagem</label><input id="char" value="Eldor Vane" readonly></div>
+              <div class="found"><svg viewBox="0 0 40 40" width="18" height="18" style="fill:#0F5A47;flex:none"><use href="#spark"/></svg><span><b>Personagem encontrado</b>Eldor Vane · Elite Knight · Antica</span></div>
+              <p class="hint">As coins vão para a conta desse personagem. Confira o nome com calma: depois de enviadas não dá para desfazer.</p>
+              <div class="summary"><div><span>250 Tibia Coins</span><span>R$ 52,00</span></div><div class="tot"><span>Total</span><span>R$ 52,00</span></div></div>
+            </div>
+            <button class="cta" id="cta2" type="button">Ir para o Pix</button>
+          </div></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">3</span><p><b>Pagar com Pix</b>A tela atualiza sozinha quando o Pix cai.</p></div>
+          <div class="phone"><div class="screen">
+            <div class="scr-top"><span class="wm"><span class="b grad">Bella</span><span class="c">COINS</span></span><small>#BC-0142</small></div>
+            <div class="scr-body">
+              <h4>Pague R$ 52,00</h4>
+              <svg class="qr" viewBox="0 0 29 29" aria-label="QR Code de exemplo"><use href="#qr"/></svg>
+              <div class="copy"><span>00020126580014br.gov.bcb.pix0136a1b2c3d4-exemplo</span><b>Copiar</b></div>
+              <p class="timer">Esperando o pagamento · expira em <b>14:52</b></p>
+              <p class="hint">Assim que o Pix for confirmado, você recebe a mensagem de entrega no WhatsApp.</p>
+            </div>
+            <button class="cta" id="cta3" type="button">Copiar código Pix</button>
+          </div></div>
+        </div>
+      </div>
+      <div class="rules-u">
+        <div><b>Um botão por tela</b><p>Magenta, grande, sempre embaixo e no mesmo lugar.</p></div>
+        <div><b>Total sempre visível</b><p>O cliente nunca chega no Pix sem ter visto quanto vai pagar.</p></div>
+        <div><b>Personagem conferido</b><p>O nome é checado antes do pagamento, o que evita o erro mais comum e mais caro.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="aplicacoes">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Aplicações</span>
+        <h2>Onde a marca brilha</h2>
+        <p class="lede">Datas, preços e números de pedido abaixo são exemplos.</p>
+      </div>
+      <div class="apps">
+        <div class="mock">
+          <span class="mock-label">Instagram · preço do dia</span>
+          <div class="post">
+            <svg class="coin-big" viewBox="0 0 100 100" aria-hidden="true"><use href="#coin"/></svg>
+            <div class="top"><span class="wm"><span class="b grad">Bella</span><span class="c">COINS</span></span><span class="date">04.11</span></div>
+            <div class="mid">
+              <span class="k">Preço do dia · 250 TC</span>
+              <span class="big num">R$ 52<small>,00</small></span>
+            </div>
+            <div class="foot"><span class="sticker st1">Pix na hora</span><span style="color:var(--muted)">@bellacoins</span></div>
+          </div>
+        </div>
+        <div class="mock">
+          <span class="mock-label">WhatsApp · entrega</span>
+          <div class="chat">
+            <div class="chat-head"><svg viewBox="0 0 100 100"><use href="#coin"/></svg><span>BellaCoins<small>conta comercial</small></span></div>
+            <div class="bubble me">Oi! Quero 250 TC pro Eldor Vane<span class="t">14:21</span></div>
+            <div class="bubble">Oi! Pedido <b>#BC-0142</b>: 250 TC por R$ 52,00. Te mandei o Pix copia e cola logo abaixo. Confere o nome do char antes de pagar, tá?<span class="t">14:22</span></div>
+            <div class="bubble">Pix recebido ✦ Suas 250 TC já estão no <b>Eldor Vane</b>. Obrigada pela compra!<span class="t">14:31</span></div>
+          </div>
+        </div>
+        <div class="mock">
+          <span class="mock-label">Comprovante</span>
+          <div class="receipt">
+            <div class="rh"><span class="lockup"><svg width="34" height="34" viewBox="0 0 100 100"><use href="#coin"/></svg><span class="wm"><span class="b">Bella</span><span class="c">COINS</span></span></span><span class="id">#BC-0142<br>04/11/2026 · 14:31</span></div>
+            <span class="status"><i class="dot" style="background:#0F9D76"></i>Entregue</span>
+            <dl><dt>Produto</dt><dd>250 Tibia Coins</dd><dt>Personagem</dt><dd>Eldor Vane</dd><dt>Pagamento</dt><dd>Pix</dd></dl>
+            <div class="total"><span>Total</span><span>R$ 52,00</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="voz">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Tom de voz</span>
+        <h2>Simpática, rápida e sempre clara</h2>
+        <p class="lede">A BellaCoins fala como uma amiga que entende de Tibia: próxima, com um brilho aqui e ali, mas sem esconder prazo, preço ou regra.</p>
+      </div>
+      <div class="voice">
+        <div class="voice-col yes"><h3>Escrevemos assim</h3><ul>
+          <li>“Pix recebido ✦ Suas 250 TC já estão no Eldor Vane.”</li>
+          <li>“Confere o nome do char antes de pagar, tá? Depois de enviado não dá pra desfazer.”</li>
+          <li>“Preço do dia: 250 TC por R$ 52.”</li>
+        </ul></div>
+        <div class="voice-col no"><h3>Evitamos</h3><ul>
+          <li>“🔥🔥 MEGA PROMO SÓ HOJE CORREEE 🔥🔥”</li>
+          <li>“Loja oficial” ou “parceira CipSoft”</li>
+          <li>“100% seguro, risco zero”</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="cuidados">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="eyebrow">Cuidados com a marca</span>
+        <h2>O que a BellaCoins nunca usa</h2>
+      </div>
+      <ul class="rules">
+        <li><span class="x">✕</span><p><b>Logo, arte, personagens ou fonte do Tibia</b>São da CipSoft. Usar pode render pedido de remoção e passa a impressão de vínculo oficial.</p></li>
+        <li><span class="x">✕</span><p><b>“Oficial”, “autorizada” ou “parceira”</b>Só valeria entrando no programa de revenda da CipSoft.</p></li>
+        <li><span class="x">✕</span><p><b>Anúncio dentro do jogo</b>As regras proíbem anunciar venda por dinheiro real no chat ou no nome do personagem.</p></li>
+        <li><span class="c">✓</span><p><b>Arte própria e consistente</b>Moeda, brilhos, magenta e dourado em todo lugar. A consistência é o que faz o cliente reconhecer e confiar.</p></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">BellaCoins · proposta de identidade visual, versão 2 · novembro de 2026. Os domínios bellacoins.com.br, bellacoins.com e bellacoins.gg não tinham DNS configurado em 04/11/2026; confirmem no registro antes de decidir.</div>
+</footer>
+
+<script>
+(function(){
+  var b = document.querySelectorAll('.cta');
+  b.forEach(function(el){
+    el.addEventListener('click', function(){
+      var t = el.textContent; el.textContent = 'Exemplo de tela';
+      setTimeout(function(){ el.textContent = t; }, 1200);
+    });
+  });
+})();
+</script>
