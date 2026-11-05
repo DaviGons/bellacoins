@@ -1,0 +1,55 @@
+/* Tokens da marca: mesmos valores de marca/cores.css (identidade visual v2).
+   As fontes vêm do next/font em layout.tsx, então aqui não há @import. */
+:root {
+  /* paleta */
+  --bc-noite: #160A24;      /* Noite Ameixa: fundo */
+  --bc-noite-2: #21103A;    /* superfície */
+  --bc-noite-3: #2E1850;    /* superfície elevada */
+  --bc-magenta: #FF2E88;    /* Magenta Bella: ações */
+  --bc-coral: #FF7A45;
+  --bc-ouro: #FFC23D;       /* Ouro Bella: moeda, preços, selos */
+  --bc-lilas: #B79CFF;      /* apoio */
+  --bc-perola: #FFF4F8;     /* telas de compra, textos */
+  --bc-brilho: linear-gradient(115deg, #FF2E88 0%, #FF7A45 50%, #FFC23D 100%);
+
+  /* status de pedido */
+  --bc-entregue: #3DDBB4;
+  --bc-aguardando: #FFC23D;
+  --bc-cancelado: #FF5C5C;
+
+  /* fontes */
+  --bc-f-bella: var(--font-fraunces), Georgia, serif;                      /* só "Bella", itálico 900 */
+  --bc-f-titulo: var(--font-unbounded), "Arial Black", sans-serif;
+  --bc-f-texto: var(--font-jakarta), "Segoe UI", system-ui, sans-serif;
+  --bc-f-numero: var(--font-dm-mono), ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--bc-noite);
+  color: var(--bc-perola);
+  font-family: var(--bc-f-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
