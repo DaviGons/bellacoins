@@ -4,10 +4,12 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { NovoPedido, Pedido, RepositorioPedidos, Status } from "./tipos";
 
-// Pedidos num arquivo JSON local. Serve para desenvolver e testar no computador.
-// Não funciona na Vercel (o disco lá é só leitura e some a cada deploy): em produção, usar o Supabase.
+// Pedidos num arquivo JSON. Serve para desenvolver no computador e para a demonstração.
+// Na Vercel o disco é só leitura, então vai para /tmp: funciona para mostrar o site, mas os pedidos
+// somem quando o servidor reinicia e cada instância tem o seu. Para pedidos de verdade, usar o Supabase.
 
-const ARQUIVO = path.resolve(/*turbopackIgnore: true*/ process.env.PEDIDOS_ARQUIVO ?? ".dados/pedidos.json");
+const PADRAO = process.env.VERCEL ? "/tmp/bellacoins-pedidos.json" : ".dados/pedidos.json";
+const ARQUIVO = path.resolve(/*turbopackIgnore: true*/ process.env.PEDIDOS_ARQUIVO ?? PADRAO);
 
 async function ler(): Promise<Pedido[]> {
   try {
