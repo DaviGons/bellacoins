@@ -10,6 +10,7 @@ Página da identidade: https://claude.ai/artifact/Tgyh37b4QHifte61phAuL7 (cópia
 
 | Pasta | O que tem |
 |---|---|
+| `site/` | Site da loja (MVP em Next.js): pacotes, conferência do personagem, Pix e painel de pedidos. Ver `site/README.md` |
 | `docs/negocio.md` | Modelo de negócio, preços pesquisados, conta de margem, riscos e quando abrir CNPJ |
 | `docs/identidade-visual.md` | Resumo da marca: cores, fontes, logo, tom de voz e regras |
 | `marca/logo/` | Logos em SVG e, em `png/`, prontos para Instagram, WhatsApp e Discord |
@@ -69,7 +70,7 @@ Quando o site começar: `bash scripts/instalar-skills.sh --site` (Supabase, Verc
 
 ## Depois
 
-- Site com catálogo, Pix automático, conferência do personagem e painel de pedidos (o fluxo de 3 telas está na página da identidade)
+- Site: o MVP está em `site/` (catálogo, conferência do personagem, Pix copia e cola e painel, com confirmação manual). Faltam banco de dados (Supabase), Pix automático e publicação na Vercel; o caminho está em `site/README.md`
 - Outros formatos de arte (stories 1080x1920, tabela de preços) a partir de `.claude/skills/arte-preco-do-dia/modelo-feed.svg`. O post de feed do "preço do dia" já está pronto.
 
 ## Regras que não mudam

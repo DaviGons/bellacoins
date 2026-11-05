@@ -8,4 +8,5 @@ Antes de mexer, ler `README.md`, `docs/negocio.md` e `docs/identidade-visual.md`
 - Nunca sugerir bot, macro, script ou qualquer automação na conta do Tibia; entrega é manual.
 - Nunca usar arte/logo do Tibia nem chamar a loja de "oficial".
 - Para gerar PNG dos SVGs com as fontes certas sem instalá-las: um fonts.conf apontando para `marca/fontes/` em `FONTCONFIG_FILE`, depois `rsvg-convert`.
+- Site em `site/` (Next.js 16): antes de mexer, ler `site/README.md` e `site/CLAUDE.md`.
 - Página publicada da identidade: https://claude.ai/artifact/Tgyh37b4QHifte61phAuL7
