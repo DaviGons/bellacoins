@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { TrilhaCompra } from "@/components/TrilhaCompra";
-import { pacoteValido, precoCentavos } from "@/config/loja";
+import { precoCentavos, quantidadeValida } from "@/config/loja";
 import { reais } from "@/lib/dinheiro";
+import { linkWhatsApp, mensagemCartao } from "@/lib/whatsapp";
 import { FormPedido } from "./FormPedido";
 
 export const metadata: Metadata = { title: "Seu personagem" };
@@ -23,10 +24,10 @@ export default function Comprar({ searchParams }: PageProps<"/comprar">) {
 
 async function Conteudo({ searchParams }: Pick<PageProps<"/comprar">, "searchParams">) {
   const tc = Number((await searchParams).tc);
-  if (!pacoteValido(tc)) {
+  if (!quantidadeValida(tc)) {
     return (
       <p className="subtitulo">
-        Esse pacote não existe. <Link href="/#pacotes">Escolha um pacote</Link> para continuar.
+        Essa quantidade não dá para enviar (use múltiplos de 25 TC). <Link href="/#pacotes">Escolha de novo</Link>.
       </p>
     );
   }
@@ -49,6 +50,13 @@ async function Conteudo({ searchParams }: Pick<PageProps<"/comprar">, "searchPar
           </div>
         </dl>
       </div>
+      <p className="ajuda centro" style={{ marginTop: 18 }}>
+        Prefere cartão de crédito?{" "}
+        <a href={linkWhatsApp(mensagemCartao(tc))} target="_blank" rel="noopener noreferrer">
+          Fale com a gente no WhatsApp
+        </a>
+        .
+      </p>
     </>
   );
 }

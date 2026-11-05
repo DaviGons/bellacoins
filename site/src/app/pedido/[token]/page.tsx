@@ -7,6 +7,7 @@ import { LOJA } from "@/config/loja";
 import { modoDemo } from "@/lib/demo";
 import { reais } from "@/lib/dinheiro";
 import { gerarCobranca } from "@/lib/pagamento";
+import { linkWhatsApp, whatsappConfigurado } from "@/lib/whatsapp";
 import { pedidos, ROTULO_STATUS, type Pedido, type Status } from "@/lib/pedidos";
 import { simularStatus } from "./actions";
 import { AtualizarSozinho } from "./AtualizarSozinho";
@@ -131,10 +132,14 @@ async function Conteudo({ params }: Pick<PageProps<"/pedido/[token]">, "params">
 
       <p className="ajuda" style={{ marginTop: 20 }}>
         Guarde o link desta página para acompanhar o pedido. Entrega {LOJA.prazoEntrega} depois do Pix, {LOJA.horario}.
-        {LOJA.whatsapp && (
+        {whatsappConfigurado && (
           <>
             {" "}
-            Dúvidas? <a href={LOJA.whatsapp}>Fale no WhatsApp</a>.
+            Dúvidas?{" "}
+            <a href={linkWhatsApp(`Oi, BellaCoins! Tenho uma dúvida sobre o pedido ${pedido.numero}.`)} target="_blank" rel="noopener noreferrer">
+              Fale no WhatsApp
+            </a>
+            .
           </>
         )}
       </p>

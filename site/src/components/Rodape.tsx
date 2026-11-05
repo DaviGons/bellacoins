@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LOJA } from "@/config/loja";
+import { linkWhatsApp, whatsappConfigurado } from "@/lib/whatsapp";
 import { Logo } from "./Logo";
 
 export function Rodape() {
@@ -20,7 +21,13 @@ export function Rodape() {
             <Link href="/regras">Regras da loja</Link>
           </nav>
           <nav aria-label="Contato">
-            {LOJA.whatsapp ? <a href={LOJA.whatsapp}>WhatsApp</a> : <span>WhatsApp em breve</span>}
+            {whatsappConfigurado ? (
+              <a href={linkWhatsApp()} target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>
+            ) : (
+              <span>WhatsApp em breve</span>
+            )}
             <span>Instagram em breve</span>
             <span>Discord em breve</span>
           </nav>

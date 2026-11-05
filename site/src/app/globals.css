@@ -456,6 +456,133 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
+.pack-outra {
+  grid-column: 1 / -1;
+  border-style: dashed;
+}
+
+.pack-outra:has(input:checked) {
+  border-style: solid;
+}
+
+.pack-outra .pack-tc small {
+  color: var(--claro-suave);
+  font-weight: 600;
+}
+
+.pack-outra .pack-valor {
+  font-family: var(--bc-f-titulo);
+  font-size: 1.3rem;
+  color: var(--bc-magenta);
+}
+
+/* quantidade personalizada */
+.qtd {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.qtd label {
+  font-weight: 800;
+}
+
+.qtd-controle {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 56px;
+  gap: 8px;
+}
+
+.qtd-controle button {
+  border: 1.5px solid var(--claro-borda);
+  background: #fff;
+  border-radius: 14px;
+  font: 700 1.5rem var(--bc-f-titulo);
+  color: var(--claro-texto);
+  cursor: pointer;
+}
+
+.qtd-controle button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qtd-controle input {
+  min-width: 0;
+  text-align: center;
+  font: 500 1.4rem var(--bc-f-numero);
+  padding: 12px;
+  border-radius: 14px;
+  border: 1.5px solid var(--bc-magenta);
+  background: #fff;
+  color: var(--claro-texto);
+  -moz-appearance: textfield;
+}
+
+.qtd-controle input::-webkit-outer-spin-button,
+.qtd-controle input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.qtd-controle input[aria-invalid="true"] {
+  border-color: var(--bc-cancelado);
+}
+
+.ajuda.erro {
+  color: #8a1c22;
+}
+
+/* forma de pagamento */
+.formas {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.formas legend {
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.forma {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 48px;
+  padding: 8px 10px;
+  border: 1.5px solid var(--claro-borda);
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: var(--bc-perola);
+}
+
+.forma input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.forma:has(input:checked) {
+  border-color: var(--bc-magenta);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 46, 136, 0.15);
+}
+
+.forma:has(input:focus-visible) {
+  outline: 3px solid var(--bc-lilas);
+  outline-offset: 2px;
+}
+
 .resumo-pacote {
   background: #fff;
   border: 1.5px solid var(--claro-borda);

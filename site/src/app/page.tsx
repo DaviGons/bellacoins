@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Simbolo, VersoMoeda } from "@/components/Logo";
-import { LOJA, PRECO_POR_250_CENTAVOS } from "@/config/loja";
+import { LOJA, PRECO_POR_25_CENTAVOS, PRECO_POR_250_CENTAVOS } from "@/config/loja";
 import { reais } from "@/lib/dinheiro";
 import { EscolherPacote } from "./EscolherPacote";
 
@@ -8,6 +8,14 @@ const DUVIDAS = [
   {
     p: "Quanto tempo demora para as coins chegarem?",
     r: `Depois que o Pix cai, a entrega é ${LOJA.prazoEntrega}, ${LOJA.horario}. A página do seu pedido avisa quando as coins forem enviadas.`,
+  },
+  {
+    p: "Posso pagar no cartão de crédito?",
+    r: "Pode. Escolha Cartão de crédito na hora de ver o total: abre uma conversa no WhatsApp da loja com a quantidade e o valor já escritos, e o pagamento é combinado por lá.",
+  },
+  {
+    p: "Posso comprar uma quantidade diferente dos pacotes?",
+    r: `Pode. Em "Outra quantidade" você escolhe de 25 em 25 TC, pelo mesmo preço: ${reais(PRECO_POR_25_CENTAVOS)} a cada 25 TC.`,
   },
   {
     p: "Vocês pedem minha senha ou meu login?",
@@ -80,8 +88,8 @@ export default function Inicio() {
           <ol className="passos">
             <li>
               <span className="n" aria-hidden="true">1</span>
-              <h3>Escolha o pacote</h3>
-              <p>O preço é o mesmo por coin em qualquer pacote, e o total aparece antes de tudo.</p>
+              <h3>Escolha a quantidade</h3>
+              <p>Um pacote pronto ou a quantidade que quiser, de 25 em 25. O total aparece antes de tudo.</p>
             </li>
             <li>
               <span className="n" aria-hidden="true">2</span>
@@ -130,7 +138,7 @@ export default function Inicio() {
           <div>
             <h2 id="titulo-duvidas">Dúvidas</h2>
             <p className="lede">
-              Não achou a resposta? Fale com a gente {LOJA.whatsapp ? "pelo WhatsApp" : "pelos canais do rodapé"},{" "}
+              Não achou a resposta? Fale com a gente pelo WhatsApp,{" "}
               {LOJA.horario}.
             </p>
           </div>

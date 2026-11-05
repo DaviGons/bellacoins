@@ -12,8 +12,15 @@ export default function Regras() {
       <p className="data">Rascunho de novembro de 2026. Pode mudar antes da abertura.</p>
 
       <h2>Pagamento</h2>
-      <p>O pagamento é só por Pix. O valor total aparece antes do pagamento e não muda depois.</p>
-      <p>Pague exatamente o valor do pedido. Se o banco pedir uma descrição, use o número do pedido (por exemplo, BC-0142).</p>
+      <p>
+        Pelo site, o pagamento é por Pix. O valor total aparece antes do pagamento e não muda depois. Pague exatamente o
+        valor do pedido; se o banco pedir uma descrição, use o número do pedido (por exemplo, BC-0142).
+      </p>
+      <p>
+        Cartão de crédito é atendido pelo WhatsApp da loja, onde combinamos o pagamento. As coins são enviadas depois que o
+        pagamento no cartão for aprovado.
+      </p>
+      <p>Qualquer quantidade a partir de 25 TC, de 25 em 25, pelo mesmo preço por coin dos pacotes.</p>
 
       <h2>Entrega</h2>
       <ul>

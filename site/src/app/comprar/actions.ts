@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { pacoteValido, precoCentavos } from "@/config/loja";
+import { precoCentavos, quantidadeValida } from "@/config/loja";
 import { pedidos } from "@/lib/pedidos";
 import { checarPersonagem, normalizarNome, type Personagem } from "@/lib/tibia";
 
@@ -27,7 +27,7 @@ export async function enviarPedido(_anterior: EstadoForm, form: FormData): Promi
   const confirmar = form.get("confirmar") === "1";
   const base = { nome, contato: contatoBruto };
 
-  if (!pacoteValido(tc)) return { ...base, etapa: "digitar", erro: "Pacote inválido. Volte e escolha de novo." };
+  if (!quantidadeValida(tc)) return { ...base, etapa: "digitar", erro: "Quantidade inválida. Volte e escolha de novo (múltiplos de 25 TC)." };
   if (!nome) return { ...base, etapa: "digitar", erro: "Digite o nome do personagem." };
   const contato = limparContato(contatoBruto);
   if (!contato) return { ...base, etapa: "digitar", erro: "Digite um WhatsApp com DDD, só números." };

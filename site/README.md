@@ -16,7 +16,7 @@ Não precisa de `.env` para ver. Precisa de Node 20 ou mais novo e de internet (
 
 | Endereço | O que é |
 |---|---|
-| `/` | Vitrine com a moeda, pacotes (tela 1), como funciona, regras resumidas e dúvidas |
+| `/` | Vitrine com a moeda, tela 1 (pacotes ou quantidade personalizada de 25 em 25, e forma de pagamento: Pix ou cartão pelo WhatsApp), como funciona, regras resumidas e dúvidas |
 | `/comprar?tc=250` | Tela 2: nome do personagem e WhatsApp. Confere o char na TibiaData de verdade e mostra mundo e level |
 | `/pedido/<token>` | Tela 3: QR code e Pix copia e cola, andamento do pedido e recibo quando entregue |
 | `/regras` | Regras da loja (**rascunho**, revisar antes de abrir) |
@@ -47,7 +47,7 @@ O site **ainda não usa** o Supabase (os pedidos ficam no arquivo local). Para l
 
 | Peça | Arquivo |
 |---|---|
-| Preço, pacotes, prazo e horário | `src/config/loja.ts` (o preço de R$ 52 por 250 TC, o prazo e o horário são **provisórios**) |
+| Preço, pacotes, limites da quantidade, prazo e horário | `src/config/loja.ts` (o preço de R$ 5,20 a cada 25 TC, o prazo e o horário são **provisórios**) |
 | Textos das dúvidas e da vitrine | `src/app/page.tsx` |
 | Regras | `src/app/regras/page.tsx` |
 | Cores, fontes, componentes visuais | `src/app/globals.css` (tokens copiados de `marca/cores.css`), `src/app/layout.tsx`, `src/components/` |
@@ -60,4 +60,6 @@ O site **ainda não usa** o Supabase (os pedidos ficam no arquivo local). Para l
 - **Publicar**: na Vercel o disco não guarda arquivos, então o site só pode ir para lá depois de ligar o Supabase.
 - A TibiaData responde 502 tanto para nome inexistente quanto quando está com problema. O site consulta um personagem conhecido para separar os dois casos; se a API estiver fora, o pedido entra "não conferido" e o painel avisa.
 - Falta limite de pedidos por pessoa e proteção contra robôs antes de divulgar.
-- Instagram e Discord aparecem como "em breve" no rodapé; o WhatsApp entra com `NEXT_PUBLIC_WHATSAPP_URL`.
+- Instagram e Discord aparecem como "em breve" no rodapé.
+- **WhatsApp**: preencher `NEXT_PUBLIC_WHATSAPP_NUMERO` (ex.: `5511912345678`). Sem ele, o botão do cartão abre o WhatsApp pedindo para escolher o contato.
+- **Cartão de crédito** não passa pelo site: o botão abre o WhatsApp com a quantidade e o total, e o pedido não aparece no painel. Se o cartão for ter acréscimo, ajustar a mensagem em `src/lib/whatsapp.ts` e o texto "Total no cartão".
