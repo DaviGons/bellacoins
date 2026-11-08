@@ -11,20 +11,26 @@ Toda movimentação passa por `caixa.py`. **Não editar os CSVs à mão**: o scr
 C=.claude/skills/registrar-venda/caixa.py
 
 # lote comprado de fornecedor (preco_por_250 é calculado)
-python3 $C compra --fornecedor "Nome" --tc 1000 --valor 184 --comprovante "arquivo-ou-id"
+python $C compra --fornecedor "Nome" --tc 1000 --valor 184 --comprovante "arquivo-ou-id"
 
 # pedido novo: gera o próximo #BC-NNNN; custo usa a última compra (ou --preco250 46)
-python3 $C venda --contato "(11) 9xxxx-xxxx" --personagem "Eldor Vane" --tc 250 --valor 52
+python $C venda --contato "(11) 9xxxx-xxxx" --personagem "Eldor Vane" --tc 250 --valor 52
 
 # mudar status
-python3 $C status BC-0001 entregue --comprovante "id do Pix"
+python $C status BC-0001 entregue --comprovante "id do Pix"
 
 # totais, lucro, pedidos aguardando e estoque estimado
-python3 $C resumo            # geral
-python3 $C resumo --mes 2026-11
+python $C resumo            # geral
+python $C resumo --mes 2026-11
 ```
 
 Opções comuns: `--data DD/MM/AAAA` (padrão hoje), `--obs "texto"`, `--status` na venda (padrão `aguardando`).
+
+No Windows o comando é `python` (o `python3` de lá é só um atalho da Microsoft Store); no Linux e no Mac, `python3`.
+
+- Valores: `1840`, `1.840`, `1840,50`, `1.840,50` e `R$ 52,00` funcionam (ponto com 3 dígitos depois é milhar).
+- Custo da venda: **custo médio** por 250 TC de todas as compras registradas, a menos que se passe `--preco250`.
+- Se o pedido for maior que o estoque livre (estoque menos pedidos aguardando), o script avisa: registrar a compra de coins antes de entregar.
 
 ## Passos
 

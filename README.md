@@ -14,8 +14,8 @@ Página da identidade: https://claude.ai/artifact/Tgyh37b4QHifte61phAuL7 (cópia
 | `docs/identidade-visual.md` | Resumo da marca: cores, fontes, logo, tom de voz e regras |
 | `marca/logo/` | Logos em SVG e, em `png/`, prontos para Instagram, WhatsApp e Discord |
 | `marca/fontes/` | As quatro fontes da marca (licença livre OFL) |
-| `marca/cores.css` | Cores e fontes prontas para usar no site |
-| `financeiro/` | Planilhas de controle de compras e vendas (CSV, abre no Excel ou Google Sheets) |
+| `marca/cores.css` | Cores e fontes prontas para usar no site (vitrine, modo compra, moeda e status) |
+| `financeiro/` | Planilhas de controle de compras e vendas (CSV, abre no Excel ou Google Sheets; ficam só no computador) |
 | `.claude/skills/` | Skills do Claude Code para a loja (veja abaixo) |
 | `.claude/settings.json` | Plugins do Claude Code ligados no projeto (hoje: Canva) |
 | `skills-lock.json` | Origem e versão (hash) de cada skill de terceiros instalada; não editar à mão |
@@ -39,8 +39,17 @@ Já vêm no projeto e não precisam de instalação.
 
 Fluxo de um pedido: `checar-personagem` → `mensagem-cliente` (orçamento e Pix) → `registrar-venda` (aguardando) → entrega manual → `registrar-venda` (entregue) → `mensagem-cliente` (aviso de entrega).
 
-Precisa de `python3` (só a biblioteca padrão). A arte usa também o `rsvg-convert` (pacote `librsvg`), e a checagem de personagem precisa de internet.
-Os CSVs de `financeiro/` devem ser alterados só pela skill `registrar-venda`, que mantém o formato do Excel em português.
+#### Requisitos
+
+- **Python 3.10 ou mais novo**, só a biblioteca padrão. No Windows o comando é `python` (o `python3` de lá abre a Microsoft Store e não roda nada); no Linux e no Mac, `python3`.
+- **`rsvg-convert`** (pacote `librsvg`) para a arte sair em PNG. Sem ele, a skill salva só o SVG e avisa. No Linux: `sudo apt install librsvg2-bin`; no Mac: `brew install librsvg`; no Windows, pelo MSYS2 (`pacman -S mingw-w64-ucrt-x86_64-librsvg`, depois pôr a pasta `bin` do MSYS2 no PATH).
+- Internet para a checagem de personagem.
+
+#### Planilhas
+
+- Os CSVs de `financeiro/` devem ser alterados só pela skill `registrar-venda`, que mantém o formato do Excel em português.
+- O custo de cada venda é o **custo médio** por 250 TC de todas as compras registradas. O script avisa quando um pedido passa do estoque livre.
+- Os CSVs **não vão para o GitHub** (dados de clientes). Fazer cópia de segurança da pasta `financeiro/` em outro lugar (Drive, OneDrive, pen drive).
 
 ### De terceiros
 
@@ -63,7 +72,8 @@ Quando o site começar: `bash scripts/instalar-skills.sh --site` (Supabase, Verc
 - [ ] Fechar um ou dois fornecedores de confiança (referência: compra a ~R$ 46 por 250 TC)
 - [ ] Definir o preço de venda (sugestão: R$ 52 a R$ 53 por 250 TC)
 - [ ] Escrever as regras da loja: entrega só após o Pix, o cliente confirma o nome do char, prazo, reembolso
-- [ ] Separar uma reserva para reembolsos
+- [ ] Separar uma reserva para reembolsos (uma devolução de Pix num pacote de 250 TC apaga o lucro de 10 a 15 vendas)
+- [ ] Passar chave Pix, nome do titular e cidade para gerar QR Codes Pix com o valor do pacote
 - [ ] Anotar toda compra e venda em `financeiro/` (com a skill `registrar-venda`)
 - [ ] Quando as vendas ficarem regulares, falar com um contador sobre MEI ou ME
 

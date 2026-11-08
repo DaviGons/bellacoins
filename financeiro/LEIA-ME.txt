@@ -1,7 +1,13 @@
 Planilhas de controle (separador ;, abre direto no Excel em português).
 
 - compras.csv: cada lote de coins comprado de fornecedor.
-- vendas.csv: cada pedido. custo_rs = quantidade_tc / 250 x preço pago por 250. lucro_rs = valor_recebido_rs - custo_rs.
+- vendas.csv: cada pedido. custo_rs = quantidade_tc / 250 x custo médio por 250 (todas as compras registradas).
+  lucro_rs = valor_recebido_rs - custo_rs.
 - status: aguardando, entregue, cancelado, reembolsado.
+
+Alterar só pela skill registrar-venda (caixa.py), nunca à mão.
+
+Os CSVs NÃO vão para o GitHub (estão no .gitignore). Fazer cópia de segurança desta pasta
+(Google Drive, OneDrive ou pen drive): se o computador se perder, os registros vão junto.
 
 Guardar todos os comprovantes: são a prova para a Receita de que o dinheiro que entrou era revenda, não renda.

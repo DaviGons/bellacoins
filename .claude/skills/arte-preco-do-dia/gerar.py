@@ -2,8 +2,8 @@
 """Gera a arte "Preço do dia" da BellaCoins (feed 1080x1350) em SVG e PNG.
 
 Uso:
-  python3 .claude/skills/arte-preco-do-dia/gerar.py --preco 52
-  python3 .claude/skills/arte-preco-do-dia/gerar.py --preco 52,50 --tc 250 \
+  python .claude/skills/arte-preco-do-dia/gerar.py --preco 52
+  python .claude/skills/arte-preco-do-dia/gerar.py --preco 52,50 --tc 250 \
       --selo "Pix na hora" --selo "Chegou no char" --data 05.11
 
 Saída: marketing/preco-do-dia/AAAA-MM-DD-<tc>tc.svg e .png (na raiz do projeto).
@@ -33,7 +33,8 @@ ESTILOS = {
     "desde 2026": ("none", "#B79CFF", "#B79CFF", 0),
 }
 ALTERNATIVOS = [("#FFC23D", "#160A24", None, -4), ("#FF2E88", "#FFF4F8", None, 3)]
-PROIBIDAS = ("oficial", "autorizada", "parceira", "100% seguro")
+# radicais, para pegar masculino/feminino/plural ("garantido", "garantida", "parceiros"...)
+PROIBIDAS = ("oficia", "autorizad", "parceir", "100% seguro", "garantid")
 
 
 def preco(valor: str) -> tuple[str, str]:
@@ -61,7 +62,23 @@ def selo_svg(texto: str, i: int, x: float) -> tuple[str, float]:
     return svg, larg
 
 
+def dia_da_arte(txt: str | None) -> dt.date:
+    """--data DD.MM (ou DD/MM) vira a data da arte, no ano atual; sem --data, hoje."""
+    hoje = dt.date.today()
+    if not txt:
+        return hoje
+    m = re.fullmatch(r"\s*(\d{1,2})[./](\d{1,2})\s*", txt)
+    if m:
+        try:
+            return dt.date(hoje.year, int(m.group(2)), int(m.group(1)))
+        except ValueError:
+            pass
+    sys.exit(f"Data inválida: {txt!r}. Use DD.MM, ex.: 05.11")
+
+
 def main() -> None:
+    for s in (sys.stdout, sys.stderr):
+        s.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--preco", required=True, help="preço do pacote em reais, ex.: 52 ou 52,50")
     ap.add_argument("--tc", type=int, default=250, help="quantidade de Tibia Coins (padrão 250)")
@@ -81,8 +98,8 @@ def main() -> None:
         sys.exit("Quantidade de TC deve ser múltiplo de 25.")
 
     reais, cent = preco(a.preco)
-    hoje = dt.date.today()
-    data = a.data or hoje.strftime("%d.%m")
+    dia = dia_da_arte(a.data)
+    data = dia.strftime("%d.%m")
 
     # o preço encolhe se tiver mais dígitos, para não encostar na borda
     tam = {1: 210, 2: 200, 3: 170, 4: 140}[len(reais)]
@@ -114,7 +131,12 @@ def main() -> None:
         sys.exit("Sobrou campo sem preencher no modelo.")
 
     a.saida.mkdir(parents=True, exist_ok=True)
-    nome = f"{hoje.isoformat()}-{a.tc}tc"
+    # nome pela data da arte; se já existe uma igual, não sobrescreve: -2, -3...
+    base, n = f"{dia.isoformat()}-{a.tc}tc", 1
+    nome = base
+    while (a.saida / f"{nome}.png").exists() or (a.saida / f"{nome}.svg").exists():
+        n += 1
+        nome = f"{base}-{n}"
     svg_path, png_path = a.saida / f"{nome}.svg", a.saida / f"{nome}.png"
     svg_path.write_text(svg, encoding="utf-8")
 

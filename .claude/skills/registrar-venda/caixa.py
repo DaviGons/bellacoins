@@ -9,7 +9,9 @@
 
 Formato dos CSVs: separador ";", vírgula decimal, datas DD/MM/AAAA, UTF-8 com BOM
 (para o Excel em português mostrar os acentos certos).
-custo_rs = quantidade_tc / 250 x preço pago por 250; lucro_rs = valor_recebido_rs - custo_rs.
+custo_rs = quantidade_tc / 250 x custo médio por 250 (todas as compras registradas, ou --preco250);
+lucro_rs = valor_recebido_rs - custo_rs.
+Valores aceitam "1840", "1.840", "1840,50", "1.840,50" e "R$ 52,00" (ponto sozinho com 3 dígitos = milhar).
 """
 import argparse
 import csv
@@ -33,6 +35,8 @@ def dinheiro(txt: str) -> Decimal:
     t = str(txt).strip().replace("R$", "").replace(" ", "")
     if "," in t:
         t = t.replace(".", "").replace(",", ".")
+    elif re.fullmatch(r"-?\d{1,3}(\.\d{3})+", t):
+        t = t.replace(".", "")  # "1.840" é mil oitocentos e quarenta, não 1,84
     try:
         return Decimal(t).quantize(CENT, ROUND_HALF_UP)
     except InvalidOperation:
@@ -78,9 +82,33 @@ def checar_tc(tc: int) -> None:
         sys.exit("quantidade_tc deve ser positiva e múltipla de 25.")
 
 
+def valor_positivo(txt: str) -> Decimal:
+    v = dinheiro(txt)
+    if v <= 0:
+        sys.exit(f"Valor deve ser maior que zero: {txt!r}")
+    return v
+
+
+def custo_medio_250(compras: list[dict]) -> Decimal | None:
+    """Custo médio ponderado por 250 TC, somando todas as compras registradas."""
+    tc = sum(int(c["quantidade_tc"]) for c in compras)
+    if not tc:
+        return None
+    pago = sum((dinheiro(c["valor_pago_rs"]) for c in compras), Decimal(0))
+    return (pago * 250 / tc).quantize(CENT, ROUND_HALF_UP)
+
+
+def estoque(compras: list[dict], vendas: list[dict]) -> tuple[int, int]:
+    """(TC em estoque, TC reservadas em pedidos aguardando)."""
+    comprado = sum(int(c["quantidade_tc"]) for c in compras)
+    saiu = sum(int(v["quantidade_tc"]) for v in vendas if v["status"] in ("entregue", "reembolsado"))
+    reservado = sum(int(v["quantidade_tc"]) for v in vendas if v["status"] == "aguardando")
+    return comprado - saiu, reservado
+
+
 def cmd_compra(a, pasta: Path) -> None:
     checar_tc(a.tc)
-    valor = dinheiro(a.valor)
+    valor = valor_positivo(a.valor)
     linhas = ler(pasta / "compras.csv", COMPRAS)
     linha = {
         "data": data_br(a.data), "fornecedor": a.fornecedor, "quantidade_tc": str(a.tc),
@@ -99,16 +127,14 @@ def cmd_venda(a, pasta: Path) -> None:
     if a.status not in STATUS:
         sys.exit(f"Status deve ser um de: {', '.join(STATUS)}")
     compras = ler(pasta / "compras.csv", COMPRAS)
-    if a.preco250:
-        p250 = dinheiro(a.preco250)
-    elif compras:
-        p250 = dinheiro(compras[-1]["preco_por_250"])
-    else:
+    p250 = valor_positivo(a.preco250) if a.preco250 else custo_medio_250(compras)
+    if p250 is None:
         sys.exit("Sem compras registradas: informe --preco250 (quanto custou cada 250 TC).")
-    valor = dinheiro(a.valor)
+    valor = valor_positivo(a.valor)
     custo = (p250 * a.tc / 250).quantize(CENT, ROUND_HALF_UP)
 
     vendas = ler(pasta / "vendas.csv", VENDAS)
+    em_estoque, reservado = estoque(compras, vendas)
     nums = [int(m.group(1)) for v in vendas if (m := re.fullmatch(r"#?BC-(\d+)", v["pedido"].strip()))]
     pedido = f"BC-{(max(nums) + 1) if nums else 1:04d}"
     linha = {
@@ -119,9 +145,13 @@ def cmd_venda(a, pasta: Path) -> None:
     }
     gravar(pasta / "vendas.csv", VENDAS, vendas + [linha])
     print(f"Pedido #{pedido}: {a.tc} TC para {linha['personagem']} por R$ {linha['valor_recebido_rs']} "
-          f"(custo R$ {linha['custo_rs']}, lucro R$ {linha['lucro_rs']}), status {a.status}.")
+          f"(custo R$ {linha['custo_rs']} a R$ {fmt(p250)} por 250, lucro R$ {linha['lucro_rs']}), status {a.status}.")
     if valor - custo <= 0:
         print("Atenção: esta venda não dá lucro.")
+    livre = em_estoque - reservado
+    if a.status in ("aguardando", "entregue") and a.tc > livre:
+        print(f"Atenção: estoque livre estimado é {livre} TC ({em_estoque} em estoque, {reservado} reservadas "
+              f"em pedidos aguardando). Comprar coins antes de entregar e registrar a compra.")
 
 
 def cmd_status(a, pasta: Path) -> None:
@@ -139,10 +169,13 @@ def cmd_status(a, pasta: Path) -> None:
     if a.obs:
         v["observacoes"] = "; ".join(x for x in (v["observacoes"], a.obs) if x)
     gravar(pasta / "vendas.csv", VENDAS, vendas)
-    print(f"Pedido #{alvo}: {antigo} → {a.novo}.")
+    print(f"Pedido #{alvo}: status mudou de {antigo} para {a.novo}.")
 
 
 def cmd_resumo(a, pasta: Path) -> None:
+    if a.mes and not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", a.mes):
+        sys.exit(f"Mês inválido: {a.mes!r} (use AAAA-MM, ex.: 2026-11)")
+
     def no_mes(linha):
         if not a.mes:
             return True
@@ -151,8 +184,8 @@ def cmd_resumo(a, pasta: Path) -> None:
 
     compras = [c for c in ler(pasta / "compras.csv", COMPRAS)]
     vendas = [v for v in ler(pasta / "vendas.csv", VENDAS)]
-    tc_comprado = sum(int(c["quantidade_tc"]) for c in compras)
-    tc_saiu = sum(int(v["quantidade_tc"]) for v in vendas if v["status"] in ("entregue", "reembolsado"))
+    em_estoque, reservado = estoque(compras, vendas)
+    medio = custo_medio_250(compras)
 
     vm = [v for v in vendas if no_mes(v)]
     por = {s: [v for v in vm if v["status"] == s] for s in STATUS}
@@ -170,13 +203,21 @@ def cmd_resumo(a, pasta: Path) -> None:
     if perdas:
         print(f"  Custo de reembolsos: R$ {fmt(perdas)}")
     print(f"  Gasto com compras: R$ {fmt(gasto)}")
-    print(f"  Estoque estimado (todas as datas): {tc_comprado - tc_saiu} TC")
+    print(f"  Estoque estimado (todas as datas): {em_estoque} TC"
+          + (f", {reservado} reservadas em pedidos aguardando" if reservado else ""))
+    if medio is not None:
+        print(f"  Custo médio por 250 TC: R$ {fmt(medio)}")
+    if em_estoque < 0:
+        print("  Atenção: estoque negativo. Falta registrar alguma compra ou há venda com quantidade errada.")
     pend = por["aguardando"]
     if pend:
         print("  Aguardando: " + ", ".join(f"#{v['pedido']} ({v['personagem']}, {v['quantidade_tc']} TC)" for v in pend))
 
 
 def main() -> None:
+    # No Windows, a saída redirecionada usa cp1252 e quebra acentos; UTF-8 sempre.
+    for s in (sys.stdout, sys.stderr):
+        s.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--pasta", type=Path, default=RAIZ / "financeiro", help=argparse.SUPPRESS)
     sub = ap.add_subparsers(dest="cmd", required=True)

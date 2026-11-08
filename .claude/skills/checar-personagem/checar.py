@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Confere se um personagem do Tibia existe, pela API pública TibiaData (v4).
 
-  python3 .claude/skills/checar-personagem/checar.py "Eldor Vane"
+  python .claude/skills/checar-personagem/checar.py "Eldor Vane"
 
 Só lê dados públicos (os mesmos da página de personagem do tibia.com); não toca em conta nenhuma.
 Saída 0 = existe; 1 = não confirmado (conferir à mão no link impresso); 2 = uso errado.
@@ -17,6 +17,9 @@ SITE = "https://www.tibia.com/community/?name={}"
 
 
 def main() -> int:
+    # No Windows, a saída redirecionada usa cp1252 e quebra acentos; UTF-8 sempre.
+    for s in (sys.stdout, sys.stderr):
+        s.reconfigure(encoding="utf-8", errors="replace")
     if len(sys.argv) != 2 or not sys.argv[1].strip():
         print(__doc__)
         return 2
@@ -42,9 +45,13 @@ def main() -> int:
     print(f"  Mundo: {c.get('world')} | Vocação: {c.get('vocation')} | Level: {c.get('level')}")
     if achado != nome:
         print(f"  Atenção: o nome certo é \"{achado}\" (o cliente escreveu \"{nome}\"). Usar o nome certo no pedido.")
-    for campo, aviso in (("deleted", "marcado para exclusão"), ("traded", "foi negociado no Char Bazaar recentemente")):
-        if c.get(campo):
-            print(f"  Atenção: personagem {aviso}. Confirmar com o cliente antes de entregar.")
+    # Na TibiaData v4 os dois campos só aparecem quando valem: deletion_date (data) e traded (true).
+    if c.get("deletion_date"):
+        d = c["deletion_date"][:10]  # AAAA-MM-DD -> DD/MM/AAAA
+        print(f"  Atenção: personagem marcado para exclusão em {d[8:10]}/{d[5:7]}/{d[:4]}. "
+              "Confirmar com o cliente antes de entregar.")
+    if c.get("traded"):
+        print("  Atenção: personagem negociado no Char Bazaar recentemente. Confirmar com o cliente antes de entregar.")
     print(f"  Página: {SITE.format(urllib.parse.quote_plus(achado))}")
     return 0
 

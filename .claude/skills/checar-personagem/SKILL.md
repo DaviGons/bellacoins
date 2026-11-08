@@ -8,8 +8,10 @@ description: Confere se um personagem do Tibia existe (nome exato, mundo, level)
 Passo 2 do fluxo de compra (`docs/identidade-visual.md`): o nome do char é conferido **antes** do Pix, para a entrega não ir para o personagem errado.
 
 ```bash
-python3 .claude/skills/checar-personagem/checar.py "Nome do Char"
+python .claude/skills/checar-personagem/checar.py "Nome do Char"
 ```
+
+No Windows o comando é `python`; no Linux e no Mac, `python3`.
 
 | Resultado | O que fazer |
 |---|---|

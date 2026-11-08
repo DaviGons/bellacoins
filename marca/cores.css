@@ -13,10 +13,29 @@
   --bc-perola: #FFF4F8;     /* telas de compra, textos */
   --bc-brilho: linear-gradient(115deg, #FF2E88 0%, #FF7A45 50%, #FFC23D 100%);
 
-  /* status de pedido */
+  /* texto no modo vitrine (fundo Noite Ameixa) */
+  --bc-texto: #F6EEF8;
+  --bc-texto-2: #B9A8CC;    /* texto secundário: data, @, legendas */
+  --bc-linha: rgba(255, 244, 248, .12);
+
+  /* moeda (símbolo, artes): só para desenhar a moeda, não para texto */
+  --bc-moeda: linear-gradient(135deg, #FFE59A 0%, #FFC23D 45%, #E8890C 100%);
+  --bc-moeda-borda: #B45309;
+
+  /* modo compra (fundo Pérola) */
+  --bc-compra-texto: #1E1029;
+  --bc-compra-texto-2: #6B5A7A;
+  --bc-compra-cartao: #FFFFFF;
+  --bc-compra-borda: #E6D9E8;
+  --bc-compra-borda-tracejada: #DCCDE0;
+
+  /* status de pedido: bolinhas e fundos escuros */
   --bc-entregue: #3DDBB4;
   --bc-aguardando: #FFC23D;
   --bc-cancelado: #FF5C5C;
+  /* sobre Pérola, ouro e menta não têm contraste para texto (1,5:1 e 1,6:1): usar o selo claro */
+  --bc-entregue-selo-fundo: #E5FBF4;
+  --bc-entregue-selo-texto: #0F5A47;
 
   /* fontes */
   --bc-f-bella: "Fraunces", Georgia, serif;                       /* só "Bella", itálico 900 */

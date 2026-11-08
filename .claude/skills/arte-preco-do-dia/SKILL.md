@@ -10,8 +10,10 @@ Gera o post de preço no **modo vitrine** da marca (ver `docs/identidade-visual.
 ## Como gerar
 
 ```bash
-python3 .claude/skills/arte-preco-do-dia/gerar.py --preco 52
+python .claude/skills/arte-preco-do-dia/gerar.py --preco 52
 ```
+
+No Windows o comando é `python`; no Linux e no Mac, `python3`. Sem o `rsvg-convert` instalado, o script salva só o SVG e avisa (ver "Requisitos" no README).
 
 Opções:
 
@@ -19,10 +21,10 @@ Opções:
 |---|---|---|
 | `--preco` | (obrigatório) | `52`, `52,50` ou `52.5` |
 | `--tc` | `250` | múltiplo de 25 |
-| `--data` | hoje (`DD.MM`) | aparece no canto superior direito |
+| `--data` | hoje (`DD.MM`) | aparece no canto superior direito e dá nome ao arquivo |
 | `--selo` | `Pix na hora` | repetir para 2 selos; **no máximo 2** |
 | `--insta` | `@bellacoins` | trocar se o @ for outro |
-| `--saida` | `marketing/preco-do-dia/` | gera `AAAA-MM-DD-<tc>tc.png` e `.svg` |
+| `--saida` | `marketing/preco-do-dia/` | gera `AAAA-MM-DD-<tc>tc.png` e `.svg`; se já existir, `-2`, `-3`... (nunca sobrescreve) |
 
 Selos do kit, com a cor certa: `Pix na hora` (dourado), `Chegou no char` (magenta), `Preço do dia` (pérola), `Desde 2026` (contorno lilás). Outro texto vira selo dourado ou magenta.
 
@@ -38,7 +40,7 @@ O script usa `rsvg-convert` com um `fonts.conf` temporário apontando para `marc
 ## Regras que o script já garante (não contornar)
 
 - No máximo 2 selos.
-- Bloqueia "oficial", "autorizada", "parceira" e "100% seguro".
+- Bloqueia "oficial", "autorizada", "parceira", "100% seguro" e "garantido".
 - Não usa nenhuma arte, logo, personagem ou fonte do Tibia. Não adicionar.
 - O ✦ fica perto do preço e da moeda, nunca em cima de texto.
 

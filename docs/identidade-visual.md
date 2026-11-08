@@ -29,6 +29,10 @@ Chamativa na vitrine, simples na compra.
 
 Status: entregue `#3DDBB4`, aguardando Pix `#FFC23D`, cancelado `#FF5C5C`.
 
+Apoio (já usados na página da identidade, agora também em `marca/cores.css`): texto secundário na vitrine `#B9A8CC`; no modo compra, texto `#1E1029`, texto secundário `#6B5A7A`, bordas `#E6D9E8`; selo "Entregue" sobre Pérola com fundo `#E5FBF4` e texto `#0F5A47`.
+
+Contraste (para quando o site começar): ouro e menta sobre Pérola não servem como cor de texto (1,5:1 e 1,6:1); usar a bolinha colorida com texto escuro. Texto branco sobre Magenta Bella dá 3,3:1, abaixo dos 4,5:1 recomendados para botão de 16px: no site, usar botão com texto de pelo menos 19px em negrito (vale como "texto grande", que pede 3:1).
+
 ## Fontes
 
 | Fonte | Uso |
