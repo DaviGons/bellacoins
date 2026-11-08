@@ -15,6 +15,8 @@ Tom de voz (`docs/identidade-visual.md`): **simpática, rápida e clara**. Frase
 - Nunca pedir senha, e-mail ou qualquer dado de conta do Tibia. Só o **nome do personagem**.
 - Nunca prometer entrega antes do Pix cair. Nunca mencionar bot ou entrega automática: a entrega é manual.
 - Nunca inventar chave Pix, código copia e cola, prazo ou preço. Deixar `[PIX COPIA E COLA]`, `[PRAZO]` etc. para a pessoa preencher, a menos que ela tenha passado o dado.
+- O copia e cola e o QR de um pedido vêm da skill `cobrar-pix` (`financeiro/pix/BC-NNNN.txt` e `.png`). Usar o código exatamente como o script gerou; mandar o QR junto como imagem.
+- Nunca dizer ao cliente que um print de comprovante basta: a entrega sai depois que o Pix aparece no banco da loja.
 - Não falar de anúncio dentro do jogo nem convidar o cliente a divulgar no jogo.
 
 ## Modelos
@@ -24,8 +26,8 @@ Adaptar ao caso; os valores entre colchetes vêm da conversa ou da pessoa.
 **Primeiro contato / orçamento**
 > Oi! Hoje o pacote de [250 TC] sai por [R$ 52,00]. Me passa o nome do seu personagem que eu já confiro e te mando o Pix.
 
-**Pedido criado (após `checar-personagem`)**
-> Pedido [#BC-0142]: [250 TC] para o [Eldor Vane] ([Knight] do [Refugia]), total [R$ 52,00]. Segue o Pix copia e cola: [PIX COPIA E COLA]. Confere o nome do char antes de pagar, tá?
+**Pedido criado (após `checar-personagem` e `cobrar-pix`)**
+> Pedido [#BC-0142]: [250 TC] para o [Eldor Vane] ([Knight] do [Refugia]), total [R$ 52,00]. O QR já vai com o valor certo; se preferir, use o Pix copia e cola: [PIX COPIA E COLA]. Confere o nome do char antes de pagar, tá?
 
 **Pix recebido e entregue**
 > Pix recebido ✦ Suas [250 TC] já estão no [Eldor Vane]. Obrigada pela compra!

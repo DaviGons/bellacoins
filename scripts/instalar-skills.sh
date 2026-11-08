@@ -5,8 +5,8 @@
 #   bash scripts/instalar-skills.sh          # o que serve agora (marketing, arte, design)
 #   bash scripts/instalar-skills.sh --site   # + o que só faz sentido quando o site existir
 #
-# As quatro skills próprias da loja (arte-preco-do-dia, registrar-venda, mensagem-cliente,
-# checar-personagem) já vêm no projeto, em .claude/skills/, e não precisam de instalação.
+# As cinco skills próprias da loja (arte-preco-do-dia, registrar-venda, mensagem-cliente,
+# checar-personagem, cobrar-pix) já vêm no projeto, em .claude/skills/, e não precisam de instalação.
 #
 # Precisa de: node/npx, git e o Claude Code (comando `claude`). Rodar de novo é seguro.
 

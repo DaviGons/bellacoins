@@ -69,6 +69,7 @@ def ler(caminho: Path, campos: list[str]) -> list[dict]:
 
 
 def gravar(caminho: Path, campos: list[str], linhas: list[dict]) -> None:
+    caminho.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp = tempfile.mkstemp(dir=caminho.parent, prefix=f".{caminho.name}.")
     with os.fdopen(fd, "w", encoding="utf-8-sig", newline="") as f:
         w = csv.DictWriter(f, fieldnames=campos, delimiter=";", lineterminator="\r\n")

@@ -1,6 +1,8 @@
 # Dados financeiros reais (clientes, chars, comprovantes de Pix): nunca no repositório público.
 # A skill registrar-venda recria os CSVs com cabeçalho quando eles não existem.
 financeiro/*.csv
+# QR Codes e copia e cola gerados pela skill cobrar-pix
+financeiro/pix/
 
 # Segredos
 .env

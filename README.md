@@ -18,6 +18,8 @@ Página da identidade: https://claude.ai/artifact/Tgyh37b4QHifte61phAuL7 (cópia
 | `financeiro/` | Planilhas de controle de compras e vendas (CSV, abre no Excel ou Google Sheets; ficam só no computador) |
 | `.claude/skills/` | Skills do Claude Code para a loja (veja abaixo) |
 | `.claude/settings.json` | Plugins do Claude Code ligados no projeto (hoje: Canva) |
+| `.env.example` | Modelo do `.env` (chave Pix, nome e cidade da loja); o `.env` de verdade fica só no computador |
+| `requirements.txt` | Biblioteca Python extra (`segno`, para o QR do Pix) |
 | `skills-lock.json` | Origem e versão (hash) de cada skill de terceiros instalada; não editar à mão |
 | `scripts/instalar-skills.sh` | Reinstala as skills de terceiros; `--site` adiciona as da fase do site |
 | `marketing/preco-do-dia/` | Artes geradas pela skill `arte-preco-do-dia` (a pasta aparece na primeira arte) |
@@ -36,12 +38,21 @@ Já vêm no projeto e não precisam de instalação.
 | `registrar-venda` | Anota compras e vendas nos CSVs de `financeiro/`, gera o `#BC-0001` e mostra lucro e estoque | "Anota: 250 TC pro Eldor Vane, R$ 52, contato (11) 9..." / "Resumo do mês" |
 | `checar-personagem` | Confere nome, mundo e level do char antes do Pix (API pública TibiaData, só leitura) | "Confere se o char Eldor Vane existe" |
 | `mensagem-cliente` | Mensagens de WhatsApp, Instagram e Discord no tom da marca | "Responde esse cliente avisando que o Pix caiu" |
+| `cobrar-pix` | QR Code e Pix copia e cola com o valor do pedido (Pix estático, sem tarifa de intermediário) | "Cobra o pedido BC-0001" → PNG e texto em `financeiro/pix/` |
 
-Fluxo de um pedido: `checar-personagem` → `mensagem-cliente` (orçamento e Pix) → `registrar-venda` (aguardando) → entrega manual → `registrar-venda` (entregue) → `mensagem-cliente` (aviso de entrega).
+Fluxo de um pedido: `checar-personagem` → `registrar-venda` (aguardando) → `cobrar-pix` → `mensagem-cliente` (pedido e Pix) → **conferir o Pix no app do banco** → entrega manual → `registrar-venda` (entregue) → `mensagem-cliente` (aviso de entrega).
+
+#### Pix sem tarifa
+
+A `cobrar-pix` monta o Pix no padrão do Banco Central com a chave da loja: não passa por Mercado Pago nem por outro intermediário. O cliente paga com o valor já preenchido; a confirmação é **manual**, no app do banco (print de comprovante não vale).
+
+- Configurar uma vez: copiar `.env.example` para `.env` e preencher chave Pix, nome do titular e cidade (ou mandar esses três dados ao Claude). O `.env` não vai para o GitHub.
+- Antes de usar com clientes, gerar um Pix de R$ 1,00 e pagar de outra conta para testar.
+- Conferir na tabela de tarifas do banco: pessoa física normalmente não paga para receber Pix, mas o Banco Central permite cobrança quando o uso é comercial.
 
 #### Requisitos
 
-- **Python 3.10 ou mais novo**, só a biblioteca padrão. No Windows o comando é `python` (o `python3` de lá abre a Microsoft Store e não roda nada); no Linux e no Mac, `python3`.
+- **Python 3.10 ou mais novo**, só a biblioteca padrão (a `cobrar-pix` usa também a `segno` para o QR em PNG: `python -m pip install -r requirements.txt`). No Windows o comando é `python` (o `python3` de lá abre a Microsoft Store e não roda nada); no Linux e no Mac, `python3`.
 - **`rsvg-convert`** (pacote `librsvg`) para a arte sair em PNG. Sem ele, a skill salva só o SVG e avisa. No Linux: `sudo apt install librsvg2-bin`; no Mac: `brew install librsvg`; no Windows, pelo MSYS2 (`pacman -S mingw-w64-ucrt-x86_64-librsvg`, depois pôr a pasta `bin` do MSYS2 no PATH).
 - Internet para a checagem de personagem.
 
@@ -73,7 +84,7 @@ Quando o site começar: `bash scripts/instalar-skills.sh --site` (Supabase, Verc
 - [ ] Definir o preço de venda (sugestão: R$ 52 a R$ 53 por 250 TC)
 - [ ] Escrever as regras da loja: entrega só após o Pix, o cliente confirma o nome do char, prazo, reembolso
 - [ ] Separar uma reserva para reembolsos (uma devolução de Pix num pacote de 250 TC apaga o lucro de 10 a 15 vendas)
-- [ ] Passar chave Pix, nome do titular e cidade para gerar QR Codes Pix com o valor do pacote
+- [ ] Passar chave Pix (de preferência aleatória), nome do titular e cidade para ligar a skill `cobrar-pix`, e testar com um Pix de R$ 1,00
 - [ ] Anotar toda compra e venda em `financeiro/` (com a skill `registrar-venda`)
 - [ ] Quando as vendas ficarem regulares, falar com um contador sobre MEI ou ME
 
